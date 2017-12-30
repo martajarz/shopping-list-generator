@@ -7,8 +7,10 @@ $sienna-color: #7e5233;
 $main-font: 'Open Sans', sans-serif;
 
 .navbar {
-    position: absolute;
-    top: 0;
+    background-color:transparent !important;
+	border-color:transparent;
+	background-image:none;
+    box-shadow:none;
     z-index: 10;
 }
 
@@ -23,14 +25,21 @@ $main-font: 'Open Sans', sans-serif;
 }
 
 .nav-link {
-    color: $light-steel-color;
+    color: $light-steel-color !important;
     padding-top: 14px;
     font-weight: 600;
     &:hover {
-        color: $tan-color;
+        color: $tan-color !important;
     }
-    // &:
+}
 
+.navbar-toggler {
+    z-index: 10;
+    border: 2px solid $light-steel-color !important;
+}
+
+.navbar-toggler-icon {
+    z-index: 10;
 }
 
 body {
@@ -53,6 +62,8 @@ body {
 }
 .carousel {
     margin-bottom: 4rem;
+    position: absolute;
+    top: 0;
   }
 
 .carousel-caption {
@@ -87,6 +98,27 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    padding: 10px;
+    padding: 20px;
     width: 200px;
+}
+
+.form-group {
+    label {
+        color: #fff;
+    }
+}
+
+.btn-color {
+    display: block;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #fff;
+    background-color: $dark-khaki-color;
+    border-color: $dark-khaki-color;
+    &:hover {
+        background-color: $sienna-color;
+        border-color: $sienna-color;
+    }
 }
