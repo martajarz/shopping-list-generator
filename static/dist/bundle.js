@@ -72,7 +72,7 @@
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ../sass/main.scss */ 1)\r\n\r\n$('.carousel').carousel({\r\n    interval: 5000\r\n  })//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2pzL2luZGV4LmpzPzdjMGMiXSwic291cmNlc0NvbnRlbnQiOlsicmVxdWlyZSgnLi4vc2Fzcy9tYWluLnNjc3MnKVxyXG5cclxuJCgnLmNhcm91c2VsJykuY2Fyb3VzZWwoe1xyXG4gICAgaW50ZXJ2YWw6IDUwMDBcclxuICB9KVxuXG5cbi8vLy8vLy8vLy8vLy8vLy8vL1xuLy8gV0VCUEFDSyBGT09URVJcbi8vIC4vanMvaW5kZXguanNcbi8vIG1vZHVsZSBpZCA9IDBcbi8vIG1vZHVsZSBjaHVua3MgPSAwIl0sIm1hcHBpbmdzIjoiQUFBQTtBQUNBO0FBQ0E7QUFDQTtBQUNBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///0\n");
+eval("__webpack_require__(/*! ../sass/main.scss */ 1)\r\n\r\n// $('.carousel').carousel({\r\n//     interval: 5000\r\n// })\r\n\r\n\r\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMC5qcyIsInNvdXJjZXMiOlsid2VicGFjazovLy8uL2pzL2luZGV4LmpzPzdjMGMiXSwic291cmNlc0NvbnRlbnQiOlsicmVxdWlyZSgnLi4vc2Fzcy9tYWluLnNjc3MnKVxyXG5cclxuLy8gJCgnLmNhcm91c2VsJykuY2Fyb3VzZWwoe1xyXG4vLyAgICAgaW50ZXJ2YWw6IDUwMDBcclxuLy8gfSlcclxuXHJcblxyXG5cblxuXG4vLy8vLy8vLy8vLy8vLy8vLy9cbi8vIFdFQlBBQ0sgRk9PVEVSXG4vLyAuL2pzL2luZGV4LmpzXG4vLyBtb2R1bGUgaWQgPSAwXG4vLyBtb2R1bGUgY2h1bmtzID0gMCJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///0\n");
 
 /***/ }),
 /* 1 */
