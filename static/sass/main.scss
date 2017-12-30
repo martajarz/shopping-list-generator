@@ -1,0 +1,74 @@
+// Color palette generated from  main carousel photo with https://www.canva.com/color-palette/
+$light-steel-color: #e9ebf0;
+$tan-color: #d5b794;
+$dark-khaki-color: #bb8954;
+$dark-olive-green-color: #442e27;
+$sienna-color: #7e5233;
+$main-font: 'Open Sans', sans-serif;
+
+.navbar {
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-colors {
+    background-color: $dark-olive-green-color;
+}
+
+.navbar-brand {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.nav-link {
+    color: $light-steel-color;
+    padding-top: 14px;
+    font-weight: 600;
+    &:hover {
+        color: $tan-color;
+    }
+    // &:
+
+}
+
+body {
+    font-family: $main-font;
+    overflow: hidden;
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100vw;
+    z-index: 10;
+    p {
+        margin-bottom: 0;
+        text-align: center;
+        font-size: .8em;
+        color: $light-steel-color;
+    }
+
+}
+.carousel {
+    margin-bottom: 4rem;
+  }
+
+.carousel-caption {
+    bottom: 3rem;
+}
+  
+.carousel-item {
+    height: 100vh;
+    background-color: #777;
+    img {
+        object-fit: cover;
+        height: 100%;
+    }
+}
+
+.carousel-indicators {
+      bottom: 25px;
+}
+

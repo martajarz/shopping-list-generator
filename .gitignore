@@ -1,0 +1,10 @@
+
+server/venv/
+
+static/node_modules/
+
+\.vscode/
+
+__pycache__/
+
+venv/
