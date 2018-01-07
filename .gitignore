@@ -1,6 +1,4 @@
 
-server/venv/
-
 static/node_modules/
 
 \.vscode/
@@ -8,3 +6,9 @@ static/node_modules/
 __pycache__/
 
 venv/
+
+static/files temp/
+
+ShoppingList.db
+
+flask/
