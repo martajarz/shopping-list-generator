@@ -20,14 +20,14 @@
         <div class="row">
             <div class="col-md"></div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                <form class="form" action="{{ url_for('login') }}" method="post">
+                <form class="form" action="{{ url_for('register') }}" method="post">
                     <div class="form-group-row">
-                        <input type="email" class="form-control" id="registerInputEmail" placeholder="Enter email" required>
+                        <input type="email" class="form-control" id="registerInputEmail" name="username" placeholder="Enter email" required>
                         <small class="register-email">Enter your email address.</small>
                     </div>
                     <div class="form-group-row">
-                        <input type="password" class="form-control" id="registerInputPassword" placeholder="Enetr password" required>
-                        <small class="register-password">Create a password.</small>
+                        <input type="password" class="form-control" id="registerInputPassword" name="password" placeholder="Enetr password" required>
+                        <small class="register-password">Create a password (At least 8 characters long).</small>
                     </div>
                     <div class="form-group-row">
                         <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter password (again)" required>

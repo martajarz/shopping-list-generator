@@ -8,6 +8,7 @@ require('../sass/main.scss')
 const formValidation = (function() {
     const showFieldValidation = function(input, inputIsValid) {
         if (!inputIsValid) {
+            input.parentNode.classList.remove(options.classValid);
             input.parentNode.classList.add(options.classError);
         } else {
             input.parentNode.classList.remove(options.classError);
@@ -28,9 +29,9 @@ const formValidation = (function() {
     };
 
     const testInputPassword = function(input) {
-        const pass = options.form.querySelector('#registerInputPassword');
+        const inputPassword = options.form.querySelector('#registerInputPassword');
         
-        if (pass.value.length < 8) {
+        if (inputPassword.value.length < 8) {
             showFieldValidation(input, false);
             return false;
         } else {
@@ -43,7 +44,7 @@ const formValidation = (function() {
         const inputPassword = options.form.querySelector('#registerInputPassword');
         const confirmPassword = options.form.querySelector('#registerConfirmPassword');
         
-        if (confirmPassword.value == '' || inputPassword.value !== confirmPassword.value) {
+        if (inputPassword.value.length < 8 || confirmPassword.value == '' || inputPassword.value !== confirmPassword.value) {
             showFieldValidation(input, false);
             return false;
         } else {

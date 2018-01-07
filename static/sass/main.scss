@@ -9,10 +9,10 @@ $valid-green: #00ff48;
 $main-font: 'Open Sans', sans-serif;
 
 .navbar {
-    background-color:transparent !important;
-	border-color:transparent;
-	background-image:none;
-    box-shadow:none;
+    background-color: rgba(0,0,0,0.5) !important;
+	border-color: transparent;
+	background-image: none;
+    box-shadow: none;
     z-index: 10;
 }
 
@@ -135,6 +135,9 @@ body {
 }
 
 .form {
+    small {
+        color: $tan-color;
+    }
     .error {
         color: $error-red;
         }
