@@ -4,6 +4,8 @@ $tan-color: #d5b794;
 $dark-khaki-color: #bb8954;
 $dark-olive-green-color: #442e27;
 $sienna-color: #7e5233;
+$error-red: #ff3600;
+$valid-green: #00ff48;
 $main-font: 'Open Sans', sans-serif;
 
 .navbar {
@@ -72,6 +74,7 @@ body {
   
 .carousel-item {
     height: 100vh;
+    width: 100vw;
     background-color: #777;
     img {
         object-fit: cover;
@@ -86,12 +89,16 @@ body {
 .login-window {
     background-color: rgba(0,0,0,0.5);
     position: absolute;
-    
     margin: auto;
     padding: 20px 50px;
     top: 200px;
     right: 0;
     left: 0;
+    h4 {
+        text-align: center;
+        color: $light-steel-color;
+        padding-bottom: 20px;
+    }
 }
 
 .user-icon {
@@ -122,3 +129,54 @@ body {
         border-color: $sienna-color;
     }
 }
+
+.form-group-row {
+    padding-bottom: 10px;
+}
+
+.form {
+    .error {
+        color: $error-red;
+        }
+    .error input[type="email"],
+    .error input[type="password"] {
+            color: $error-red;
+            border-color: $error-red;
+            border-width: 2px;
+        }
+    .valid {
+        color: $valid-green;
+        }
+    .valid input[type="email"],
+    .valid input[type="password"] {
+            color: $valid-green;
+            border-color: $valid-green;
+            border-width: 2px;
+        }
+}
+
+// .form .error {
+//     color:#DB083E;
+// }
+// .form .error input[type=text],
+// .form .error input[type="url"],
+// .form .error input[type="email"],
+// .form .error textarea,
+// .form .error select {
+//     color: #DB083E;
+//     border-color: #DB083E;
+//     background-position: calc(100% - 10px) center;
+//     padding-right:40px;
+// }
+// .form .error textarea {
+//     background-position: calc(100% - 10px) 10px;
+// }
+// .form .error input[type="radio"],
+// .form .error input[type="checkbox"] {
+//     border-color: #DB083E;
+//     background: #FFEDED;
+// }
+// .form .error select {
+//     background-image: none;
+//     padding-right:4px;
+// }

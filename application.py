@@ -14,6 +14,11 @@ if app.config["DEBUG"]:
         response.headers["Pragma"] = "no-cache"
         return response
 
+# configure session to use filesystem (instead of signed cookies)
+app.config["SESSION_FILE_DIR"] = mkdtemp()
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
 
 DATABASE = "ShoppingList.db"
 
@@ -61,7 +66,32 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    # forget any user_id
+    session.clear()
+
+    # if user reached route via POST (as by submitting a form via POST)
+    if request.method == "POST":
+
+        myctx = CryptContext(schemes=["sha256_crypt", "md5_crypt", "des_crypt"])
+        hash = myctx.hash(request.form.get("password"))
+
+        # query database for username
+        result = db.execute("INSERT INTO users (username, hash) VALUES(:username, :hash)", username=request.form.get("username"), hash=hash)
+
+        # ensure username do not exist already
+        if not result:
+            return apology("User exist, please choose another username.")
+
+        # log in registered user
+        rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
+        session["user_id"] = rows[0]["id"]
+
+        # redirect user to home page
+        return redirect(url_for("index"))
+
+    # else if user reached route via GET (as by clicking a link or via redirect)
+    else:
+        return render_template("register.html")
 
 if __name__=="__main__":
     app.run()

@@ -8,3 +8,5 @@ static/node_modules/
 __pycache__/
 
 venv/
+
+static/files temp/

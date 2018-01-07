@@ -7,25 +7,31 @@
 {% block main %}
     <div class="container login-window">
         <div class="row">
-            <div class="col-md"></div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
+            <div class="col">
                 <!-- icon from http://www.iconarchive.com/show/100-flat-icons-by-graphicloads.html -->
                 <img class="user-icon" src="{{ url_for('static', filename='images/user-icon.png') }}">
             </div>
-            <div class="col-md"></div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h4>Register</h4>
+            </div>
         </div>
         <div class="row">
             <div class="col-md"></div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                <form action="{{ url_for('login') }}" method="post">
-                    <div class="form-group">
-                        <label for="inputEmail">Email address</label>
-                        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                        <small class="text-muted"></small>
+                <form class="form" action="{{ url_for('login') }}" method="post">
+                    <div class="form-group-row">
+                        <input type="email" class="form-control" id="registerInputEmail" placeholder="Enter email" required>
+                        <small class="register-email">Enter your email address.</small>
                     </div>
-                    <div class="form-group">
-                        <label for="inputPassword">Password</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <div class="form-group-row">
+                        <input type="password" class="form-control" id="registerInputPassword" placeholder="Enetr password" required>
+                        <small class="register-password">Create a password.</small>
+                    </div>
+                    <div class="form-group-row">
+                        <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter password (again)" required>
+                        <small class="register-confirmation">Confirm your password.</small>
                     </div>
                     <button type="submit" class="btn btn-color">Submit</button>
                 </form>
@@ -34,3 +40,4 @@
         </div>
     </div>
 {% endblock %}
+

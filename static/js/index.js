@@ -4,4 +4,133 @@ require('../sass/main.scss')
 //     interval: 5000
 // })
 
+// based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
+const formValidation = (function() {
+    const showFieldValidation = function(input, inputIsValid) {
+        if (!inputIsValid) {
+            input.parentNode.classList.add(options.classError);
+        } else {
+            input.parentNode.classList.remove(options.classError);
+            input.parentNode.classList.add(options.classValid);
+        }
+    };
+
+    const testInputEmail = function(input) {
+        const mailReg = new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$','gi');
+
+        if (!mailReg.test(input.value)) {
+            showFieldValidation(input, false);
+            return false;
+        } else {
+            showFieldValidation(input, true);
+            return true;
+        }
+    };
+
+    const testInputPassword = function(input) {
+        const pass = options.form.querySelector('#registerInputPassword');
+        
+        if (pass.value.length < 8) {
+            showFieldValidation(input, false);
+            return false;
+        } else {
+            showFieldValidation(input, true);
+            return true;
+        }
+    };
+
+    const testConfirmPassword = function(input) {
+        const inputPassword = options.form.querySelector('#registerInputPassword');
+        const confirmPassword = options.form.querySelector('#registerConfirmPassword');
+        
+        if (confirmPassword.value == '' || inputPassword.value !== confirmPassword.value) {
+            showFieldValidation(input, false);
+            return false;
+        } else {
+            showFieldValidation(input, true);
+            return true;
+        }
+    }
+
+    const prepareElements = function() {
+        const elements = options.form.querySelectorAll(':scope [required]');
+        // const passwordId = options.form.querySelector('#registerInputPassword');
+
+        [].forEach.call(elements, function(element) {
+            if (element.nodeName.toUpperCase() == 'INPUT') {
+                const type = element.type.toUpperCase();
+                const elementId = element.id;
+
+                if (type == 'EMAIL') {
+                    element.addEventListener('keyup', function() {testInputEmail(element)});
+                    element.addEventListener('blur', function() {testInputEmail(element)});
+                }
+                if (type == 'PASSWORD' && elementId == 'registerInputPassword') {
+                    element.addEventListener('keyup', function() {testInputPassword(element)});
+                    element.addEventListener('blur', function() {testInputPassword(element)});
+                }
+                if (type == 'PASSWORD' && elementId == 'registerConfirmPassword') {
+                    element.addEventListener('keyup', function() {testConfirmPassword(element)});
+                    element.addEventListener('blur', function() {testConfirmPassword(element)});
+                }
+            }
+        });
+    };
+
+    const formSubmit = function() {
+        options.form.addEventListener('submit', function(e) {
+            e.preventDefault();
+    
+            let validated = true;
+    
+            const elements = options.form.querySelectorAll(':scope [required]');
+    
+            [].forEach.call(elements, function(element) {
+                if (element.nodeName.toUpperCase() == 'INPUT') {
+                    const type = element.type.toUpperCase();
+                    if (type == 'EMAIL') {
+                        if (!testInputEmail(element)) validated = false;
+                    }
+                    if (type == 'PASSWORD') {
+                        if (!testInputPassword(element)) validated = false;
+                    }
+                }
+            });
+    
+            if (validated) {
+                this.submit();
+            } else {
+                return false;
+            }
+        });
+    };
+
+    const init = function(_options) {
+        options = {
+            form : _options.form || null,
+            classError : _options.classError || 'error',
+            classValid : _options.classValid || 'valid'
+        }
+        if (options.form == null || options.form == undefined || options.form.length == 0) {
+            console.warn('formValidation: Źle przekazany formularz');
+            return false;
+        }
+
+        options.form.setAttribute('novalidate', 'novalidate');
+
+        prepareElements();
+        formSubmit();
+    }
+
+    return {
+        init: init
+    }
+
+
+})();
+
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector('.form');
+    formValidation.init({form : form})
+});
 
