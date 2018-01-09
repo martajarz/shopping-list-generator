@@ -3,13 +3,14 @@ import sqlite3
 
 from cs50 import SQL
 from tempfile import mkdtemp
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from passlib.context import CryptContext
 
 app = Flask(__name__)
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = False
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -108,6 +109,13 @@ def logout():
 
     # redirect user to login form
     return redirect(url_for("login"))
+
+@app.route("/checkUsername")
+def search():
+    """Check if email exist in database."""
+    u = request.args.get("u")
+    rows = db.execute("SELECT * FROM users WHERE username = :u", u=u)
+    return jsonify(rows)
 
 if __name__=="__main__":
     app.run()

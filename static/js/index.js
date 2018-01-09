@@ -1,5 +1,7 @@
 require('../sass/main.scss')
 
+// $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
+
 // $('.carousel').carousel({
 //     interval: 5000
 // })
@@ -18,6 +20,21 @@ const formValidation = (function() {
 
     const testInputEmail = function(input) {
         const mailReg = new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$','gi');
+        var taken = false;
+        var parameters = {
+            u: input.value
+        };
+        $.getJSON($SCRIPT_ROOT + '/checkUsername', parameters)
+        .done(function(data, textStatus, jqXHR) {
+            taken = true;
+        })
+        .fail(function(data, textStatus, jqXHR) {
+            taken = false;
+        })
+        .always(function() {
+            $('.loading').hide();
+        });
+    
 
         if (!mailReg.test(input.value)) {
             showFieldValidation(input, false);
