@@ -20,20 +20,16 @@ const formValidation = (function() {
 
     const testInputEmail = function(input) {
         const mailReg = new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$','gi');
-        var taken = false;
         var parameters = {
             u: input.value
         };
-        $.getJSON($SCRIPT_ROOT + '/checkUsername', parameters)
-        .done(function(data, textStatus, jqXHR) {
-            taken = true;
-        })
-        .fail(function(data, textStatus, jqXHR) {
-            taken = false;
-        })
-        .always(function() {
-            $('.loading').hide();
+        let status = false;
+
+        $.getJSON($SCRIPT_ROOT + '/checkUsername', parameters, function() {
+            status = true;
         });
+
+        console.log(status);
     
 
         if (!mailReg.test(input.value)) {

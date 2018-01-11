@@ -3,14 +3,21 @@ import sqlite3
 
 from cs50 import SQL
 from tempfile import mkdtemp
-from flask import Flask, jsonify, redirect, render_template, request, session, url_for
+from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_session import Session
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from passlib.context import CryptContext
+import flask_login
 
 app = Flask(__name__)
 app.config["JSONIFY_PRETTYPRINT_REGULAR"] = False
+app.secret_key = 'xk74Gkd2' 
+
+
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
 
 # ensure responses aren't cached
 if app.config["DEBUG"]:
@@ -26,6 +33,7 @@ app.config["SESSION_FILE_DIR"] = mkdtemp()
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
+
 
 db = SQL("sqlite:///ShoppingList.db")
 
@@ -111,11 +119,32 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/checkUsername")
-def search():
+def checkUsername():
     """Check if email exist in database."""
     u = request.args.get("u")
-    rows = db.execute("SELECT * FROM users WHERE username = :u", u=u)
+    rows = db.execute("SELECT username FROM users WHERE username = :u", u=u)
     return jsonify(rows)
+
+@app.route("/lists", methods=["GET", "POST"])
+@flask_login.login_required
+def lists():
+    """Log user in."""
+
+    # if request.method == "POST":
+
+    #     # ensure stock was submitted
+    #     if not request.form.get("symbol"):
+    #         return apology("must provide symbol")
+    #     elif not request.form.get("shares"):
+    #         return apology("must provide number of shares")
+    #     else:
+    #         stock = lookup(request.form.get("symbol"))
+    #         shares = int(request.form.get("shares"))
+    #         cash = db.execute("SELECT cash FROM users WHERE id = :id", id=session["user_id"])
+    # # else if user reached route via GET (as by clicking a link or via redirect)
+    # else:
+    return render_template("lists.html")
+
 
 if __name__=="__main__":
     app.run()
