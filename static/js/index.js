@@ -1,5 +1,7 @@
 require('../sass/main.scss')
 
+// $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
+
 // $('.carousel').carousel({
 //     interval: 5000
 // })
@@ -18,6 +20,17 @@ const formValidation = (function() {
 
     const testInputEmail = function(input) {
         const mailReg = new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$','gi');
+        var parameters = {
+            u: input.value
+        };
+        let status = false;
+
+        $.getJSON($SCRIPT_ROOT + '/check_username', parameters, function() {
+            status = true;
+        });
+
+        console.log(status);
+    
 
         if (!mailReg.test(input.value)) {
             showFieldValidation(input, false);
@@ -133,5 +146,50 @@ const formValidation = (function() {
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector('.form');
     formValidation.init({form : form})
+
+    $("#searchIngredient").typeahead({
+        highlight: false,
+        minLength: 1
+    },
+    {
+        display: function(suggestion) { return null; },
+        limit: 10,
+        source: searchIngredient,
+        templates: {
+            name: 'searchIngredient',
+            displayKey: 'ingredient',
+            suggestion: Handlebars.compile(
+                "<div><strong>" +
+                "{{ingredient}}</strong>, {{category}}" +
+                "</div>"
+            )
+        }
+    });
+    //    $("#searchIngredient").on("typeahead:selected", function(eventObject, suggestion, name) {
+
+        
+    // });
 });
 
+
+function searchIngredient(query, syncResults, asyncResults)
+{
+    // get places matching query (asynchronously)
+    var parameters = {
+        q: query
+    };
+    $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
+    .done(function(data, textStatus, jqXHR) {
+
+        // call typeahead's callback with search results (i.e., places)
+        asyncResults(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+
+        // log error to browser's console
+        console.log(errorThrown.toString());
+
+        // call typeahead's callback with no results
+        asyncResults([]);
+    });
+}

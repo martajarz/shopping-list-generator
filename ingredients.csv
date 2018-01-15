@@ -1,0 +1,422 @@
+ingredient;category
+butter;primary
+eggs;primary
+milk;primary
+parmesan;primary
+cheddar;primary
+cream;primary
+sour cream;primary
+cream cheese;primary
+mozzarella;primary
+american cheese;primary
+yogurt;primary
+evaporated milk;primary
+condensed milk;primary
+whipped cream;primary
+half and half;primary
+monterey jack cheese;primary
+feta;primary
+cottage cheese;primary
+ice cream;primary
+goat cheese;primary
+frosting;primary
+swiss cheese;primary
+buttermilk;primary
+velveeta;primary
+ricotta;primary
+powered milk;primary
+blue cheese;primary
+provolone;primary
+colby cheese;primary
+gouda;primary
+pepper jack;primary
+italian cheese;primary
+romano;primary
+brie;primary
+pepperjack cheese;primary
+custard;primary
+ghee;primary
+pecorino cheese;primary
+gruyere;primary
+creme fraiche;primary
+neufchatel;primary
+muenster;primary
+asiago;primary
+queso fresco cheese;primary
+hard cheese;primary
+havarti cheese;primary
+mascarpone;primary
+garlic;vegetable
+onion;vegetable
+olive;vegetable
+tomato;vegetable
+potato;vegetable
+green salad;vegetable
+carrot;vegetable
+basil;vegetable
+parsley;vegetable
+rosemary;vegetable
+bell pepper;vegetable
+chili pepper;vegetable
+corn;vegetable
+ginger;vegetable
+muchroom;vegetable
+broccoli;vegetable
+spinach;vegetable
+green beans;vegetable
+celery;vegetable
+red onion;vegetable
+cilantro;vegetable
+cucumber;vegetable
+pickle;vegetable
+dill;vegetable
+avocado;vegetable
+sweet potato;vegetable
+zucchini;vegetable
+shallot;vegetable
+mixed vegetable;vegetable
+cabbage;vegetable
+asparagus;vegetable
+cauliflower;vegetable
+mint;vegetable
+pumpkin;vegetable
+kale;vegetable
+scallion;vegetable
+squach;vegetable
+sun dried tomato;vegetable
+horseradish;vegetable
+sweet corn;vegetable
+beet;vegetable
+lemon;fruit
+banana;fruit
+apple;fruit
+coconut;fruit
+mango;fruit
+lime;fruit
+orange;fruit
+pineapple;fruit
+strawberries;fruit
+raisin;fruit
+blueberries;fruit
+grapefruit;fruit
+honeydew;fruit
+grape;fruit
+prunes;fruit
+nectarine;fruit
+fig;fruit
+peach;fruit
+cranberries;fruit
+raspberries;fruit
+pear;fruit
+cherry;fruit
+apricot;fruit
+blackberries;fruit
+berries;fruit
+date;fruit
+watermelon;fruit
+kiwi;fruit
+craisins;fruit
+mandarin;fruit
+cantaloupe;fruit
+plum;fruit
+papaya;fruit
+pomegranate;fruit
+apple butter;fruit
+clementine;fruit
+rhubarb;fruit
+tangerine;fruit
+sultanas;fruit
+currant;fruit
+plantain;fruit
+passionfruit;fruit
+persimmons;fruit
+quince;fruit
+lychee;fruit
+tangelos;fruit
+lingonberry;fruit
+kumquat;fruit
+boysenberry;fruit
+star fruit;fruit
+guava;fruit
+red pepper flake;spice
+cinnamon;spice
+chive;spice
+vanilla;spice
+garlic powder;spice
+oregano;spice
+paprika;spice
+cayenne;spice
+chili powder;spice
+cumin;spice
+thyme;spice
+onion powder;spice
+curry;spice
+clove;spice
+bay leaf;spice
+taco seasoning;spice
+sage;spice
+ground nutmeg;spice
+turmeric;spice
+celery salt;spice
+vanilla essence;spice
+marjoram;spice
+cardamon;spice
+celery seed;spice
+garam masala;spice
+mustard seed;spice
+chile powder;spice
+italian herbs;spice
+saffron;spice
+caraway;spice
+herbs de provence;spice
+italian spice;spice
+star anise;spice
+savory;spice
+cacao;spice
+tamarind;spice
+chicken breast;meat
+ground beef;meat
+bacon;meat
+sausage;meat
+chicken;meat
+ham;meat
+veal;meat
+beef steak;meat
+pork chops;meat
+chicken thighs;meat
+ground turkey;meat
+pork;meat
+turkey;meat
+pepperoni;meat
+whole chicken;meat
+chicken leg;meat
+ground pork;meat
+chicken wings;meat
+chorizo;meat
+polish sausage;meat
+salami;meat
+pork roast;meat
+ground chicken;meat
+pork ribs;meat
+venison;meat
+spam;meat
+lamb;meat
+pork shoulder;meat
+beef roast;meat
+bratwurst;meat
+prosciutto;meat
+chicken roast;meat
+bologna;meat
+corned beef;meat
+lamb chops;meat
+ground lamb;meat
+beef ribs;meat
+duck;meat
+panacetta;meat
+beef liver;meat
+leg of lamb;meat
+chicken giblets;meat
+beef shank;meat
+pork belly;meat
+cornish hen;meat
+lamb shoulder;meat
+lamb shank;meat
+canned tuna;fish
+salmon;fish
+fish fillets;fish
+haddock;fish
+grouper;fish
+cod;fish
+flounder;fish
+anchovies;fish
+tuna steak;fish
+rockfish;fish
+sardines;fish
+smoked salmon;fish
+monkfish;fish
+canned salmon;fish
+whitefish;fish
+halibut;fish
+trout;fish
+mahi mahi;fish
+catfish;fish
+sea bass;fish
+mackerel;fish
+sole;fish
+red snapper;fish
+pollock;fish
+herring;fish
+perch;fish
+caviar;fish
+pike;fish
+bluefish;fish
+lemon sole;fish
+eel;fish
+carp;fish
+cuttlefish;fish
+barramundi;fish
+wheat germ;grain
+flour;grain
+whole wheat flour;grain
+rice;grain
+pasta;grain
+bread;grain
+baking powder;baking
+bread crumbs;grain
+bran;grain
+cornstarch;grain
+semolina;grain
+rolled oats;grain
+yeast;baking
+quinoa;grain
+pancake mix;baking
+flour tortillas;
+crormeal;
+saltines;
+brown rice;grain
+popcorn;
+self rising flour;
+corn tortillas;
+biscuits;
+couscous;
+pie crust;
+pita;
+bisquick;
+cereal;
+croutons;
+lasagne;
+ramen;
+baguette;
+barley;
+puff pastry;
+bagel;
+pretzel;
+multigrain bread;
+crescent roll dough;
+wheat;
+ravioli;
+gnocchi;
+bread dough;
+potato flakes;
+rye;
+ciabatta;
+breadsticks;
+spelt;
+vegetable oil;oil
+olive oil;oil
+peanut oil;oil
+cooking spray;oil
+lard;oil
+almond oil;oil
+grape seed oil;oil
+shrimp;seafood
+crab;seafood
+scallop;seafood
+prawns;seafood
+clam;seafood
+lobster;seafood
+octopus;seafood
+calmari;seafood
+squid;seafood
+oyster;seafood
+cockle;seafood
+crawfish;seafood
+mussel;seafood
+sugar;sweet
+honey;sweet
+confectioners sugar;sweet
+maple syrup;sweet
+syrup;sweet
+molasses;sweet
+corn syrup;sweet
+bouillon;seasoning
+ground ginger;seasoning
+sesame seed;seasoning
+apple cider;seasoning
+chilli sauce;seasoning
+liquid smoke;seasoning
+balsamic glaze;seasoning
+hoisin sauce;seasoning
+vegetable bouillon;seasoning
+soya sauce;seasoning
+rice wine;seasoning
+rose water;seasoning
+fish stock;seasoning
+champagne vinegar;seasoning
+peanut butter;nut
+chestnut;nut
+almond oil;nut
+cashew;nut
+walnut;nut
+peanut;nut
+pecan;nut
+flax;nut
+pine nut;nut
+pistachio;nut
+almond meal;nut
+praline;nut
+hazelnut;nut
+macadamia;nut
+almond paste;nut
+macaroon;nut
+mayonnaise;condiments
+mustard;condiments
+ketchup;condiments
+vinegar;condiments
+balsamic vinegar;condiments
+cider vinegar;condiments
+rice vinegar;condiments
+mirin;condiments
+apple cider vinegar;condiments
+fish sauce;condiments
+blue cheese dressing;condiments
+chocolate;sweet
+white chocolate;sweet
+graham cracker;snack
+marshmallow;sweet
+potato chips;snack
+bittersweet chocolate;sweet
+dark chocolate;sweet
+chocolate syrup;sweet
+nutella;sweet
+apple juice;beverages
+coffee;beverages
+orange juice;beverages
+tea;beverages
+espresso;beverages
+tomato juice;beverages
+green tea;beverages
+cranberry juice;beverages
+coke;beverages
+lemonade;beverages
+ginger ale;beverages
+pineapple juice;beverages
+fruit juice;beverages
+club soda;beverages
+sprite;beverages
+grenadine;beverages
+margarita mix;beverages
+soy milk;vegan
+almond milk;vegan
+coconut milk;vegan
+hemp milk;vegan
+peas;legume
+black peas;legume
+chickpea;legume
+lentil;legume
+hummus;legume
+soybeans;legume
+pinto beans;legume
+cannellini beans;legume
+navy beans;legume
+kidney beans;legume
+lima beans;legume
+green beans;legume
+french beans;legume
+tomato sauce;vegetable
+tomato paste;vegetable
+chicken gravy;condiments
+pesto;vegetable
+beefÿgravy;condiments
+alfredo sauce;condiments
+curry paste;condiments

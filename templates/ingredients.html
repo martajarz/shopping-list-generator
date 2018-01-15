@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="container ingredients">
+        <div class="row">
+            <div class="col">
+                <h5>Search ingredients:</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md"></div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                <form class="form">
+                    <div class="form-group">
+                        <label class="sr-only" for="q">City, State, Postal Code</label>
+                        <input class="form-control" id="searchIngredient" placeholder="Name, category.." type="text"/>
+                    </div>
+                </form>
+            </div>    
+            <div class="col-md"></div>
+        </div>
+    </div>
+{% endblock %}
