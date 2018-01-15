@@ -2,6 +2,7 @@
 $light-steel-color: #e9ebf0;
 $tan-color: #d5b794;
 $dark-khaki-color: #bb8954;
+$tussock-color: #c38748;
 $dark-olive-green-color: #442e27;
 $sienna-color: #7e5233;
 $error-red: #ff3600;
@@ -9,15 +10,11 @@ $valid-green: #00ff48;
 $main-font: 'Open Sans', sans-serif;
 
 .navbar {
-    background-color: rgba(0,0,0,0.5) !important;
 	border-color: transparent;
 	background-image: none;
     box-shadow: none;
     z-index: 10;
-}
-
-.navbar-colors {
-    background-color: $dark-olive-green-color;
+    background-color: rgba(0,0,0,0.5) !important;
 }
 
 .navbar-brand {
@@ -25,6 +22,20 @@ $main-font: 'Open Sans', sans-serif;
     font-weight: bold;
     font-size: 1.5em;
 }
+
+.navbar-user {
+    margin-bottom: 4rem;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    height: 62px;
+    width: 100vw;
+    img {
+        object-fit: cover;
+        height: 100%;
+    }
+}
+
 
 .nav-link {
     color: $light-steel-color !important;
@@ -159,28 +170,20 @@ body {
         }
 }
 
-// .form .error {
-//     color:#DB083E;
-// }
-// .form .error input[type=text],
-// .form .error input[type="url"],
-// .form .error input[type="email"],
-// .form .error textarea,
-// .form .error select {
-//     color: #DB083E;
-//     border-color: #DB083E;
-//     background-position: calc(100% - 10px) center;
-//     padding-right:40px;
-// }
-// .form .error textarea {
-//     background-position: calc(100% - 10px) 10px;
-// }
-// .form .error input[type="radio"],
-// .form .error input[type="checkbox"] {
-//     border-color: #DB083E;
-//     background: #FFEDED;
-// }
-// .form .error select {
-//     background-image: none;
-//     padding-right:4px;
-// }
+.ingredients {
+    position: absolute;
+    margin: auto;
+    padding: 20px 50px;
+    top: 200px;
+    right: 0;
+    left: 0;
+    h5 {
+        text-align: center;
+        color: $tussock-color;
+        padding-bottom: 20px;
+    }
+}
+
+.twitter-typeahead, .tt-hint, .tt-input, .tt-menu { 
+    width: 100%;
+}

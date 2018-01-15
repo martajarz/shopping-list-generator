@@ -25,7 +25,7 @@ const formValidation = (function() {
         };
         let status = false;
 
-        $.getJSON($SCRIPT_ROOT + '/checkUsername', parameters, function() {
+        $.getJSON($SCRIPT_ROOT + '/check_username', parameters, function() {
             status = true;
         });
 
@@ -146,5 +146,50 @@ const formValidation = (function() {
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector('.form');
     formValidation.init({form : form})
+
+    $("#searchIngredient").typeahead({
+        highlight: false,
+        minLength: 1
+    },
+    {
+        display: function(suggestion) { return null; },
+        limit: 10,
+        source: searchIngredient,
+        templates: {
+            name: 'searchIngredient',
+            displayKey: 'ingredient',
+            suggestion: Handlebars.compile(
+                "<div><strong>" +
+                "{{ingredient}}</strong>, {{category}}" +
+                "</div>"
+            )
+        }
+    });
+    //    $("#searchIngredient").on("typeahead:selected", function(eventObject, suggestion, name) {
+
+        
+    // });
 });
 
+
+function searchIngredient(query, syncResults, asyncResults)
+{
+    // get places matching query (asynchronously)
+    var parameters = {
+        q: query
+    };
+    $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
+    .done(function(data, textStatus, jqXHR) {
+
+        // call typeahead's callback with search results (i.e., places)
+        asyncResults(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+
+        // log error to browser's console
+        console.log(errorThrown.toString());
+
+        // call typeahead's callback with no results
+        asyncResults([]);
+    });
+}
