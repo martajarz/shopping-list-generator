@@ -4,7 +4,7 @@ import sqlite3
 from cs50 import SQL
 from tempfile import mkdtemp
 from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
-from flask_session import Session
+from flask_session import Session 
 from passlib.apps import custom_app_context as pwd_context
 from tempfile import mkdtemp
 from passlib.context import CryptContext
@@ -58,7 +58,7 @@ def login():
         session["user_id"] = rows[0]["ID"]
 
         # redirect user to home page
-        return redirect(url_for("index"))
+        return redirect(url_for("lists"))
 
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
@@ -66,6 +66,7 @@ def login():
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    """Register user."""
     # forget any user_id
     session.clear()
 
@@ -94,6 +95,7 @@ def register():
         return render_template("register.html")
 
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out."""
 
@@ -103,24 +105,45 @@ def logout():
     # redirect user to login form
     return redirect(url_for("login"))
 
-@app.route("/check_username")
+@app.route("/check_username" )
+@login_required
 def check_username():
     """Check if email exist in database."""
-    u = request.args.get("u")
-    rows = db.execute("SELECT username FROM users WHERE username = :u", u=u)
+    q = request.args.get("q")
+    rows = db.execute("SELECT username FROM users WHERE username = :q", q=q)
     return jsonify(rows)
 
 @app.route("/search_ingredient")
+@login_required
 def search_ingredient():
     """Search for ingredients that match query."""
     q = request.args.get("q").replace("+", "* ") + "*"
     rows = db.execute("SELECT * FROM ingredients_search WHERE ingredients_search MATCH :q", q=q)
     return jsonify(rows)
 
+# @app.route("/list_submit_ingredient", methods=["POST"])
+# @login_required
+# def list_submit_ingredient():
+#     """Submit ingredient to list."""
+#     if request.method == "POST":
+
+#         ingredient = request.form.get("listSubmitIngredient")
+#         measure = request.form.get("listSubmitMeasure")
+#         unit = request.form.get("listSubmitUnit")
+#         list_name = request.form.get("listSubmitListname")
+
+#         db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+#         check_id = db.execute("SELECT rowid FROM ingredients WHERE ingredient = :i", i=ingredient)
+#         db.execute("INSERT INTO lists (ingredientId, measure, unit, userId, listName) VALUES(:ingredientId, :measure, :unit, :id, :listName)", ingredientId=check_id, measure=measure, unit=unit, id=session["user_id"], listName=list_name)
+#         return render_template("ingredients.html")
+
+#     else:
+#         return render_template("ingredients.html")
+
 @app.route("/lists", methods=["GET", "POST"])
 @login_required
 def lists():
-    """Log user in."""
+    """Manage lists."""
 
     # if request.method == "POST":
 
@@ -140,7 +163,7 @@ def lists():
 @app.route("/recipes", methods=["GET", "POST"])
 @login_required
 def recipes():
-    """Log user in."""
+    """Manage recipes."""
 
     # if request.method == "POST":
 
@@ -160,22 +183,32 @@ def recipes():
 @app.route("/ingredients", methods=["GET", "POST"])
 @login_required
 def ingredients():
-    """Log user in."""
+    """Manage ingredients."""
+    # get list
+    names = []
+    rows = db.execute("SELECT listName FROM lists WHERE userId = :id", id=session["user_id"])
 
-    # if request.method == "POST":
+    for row in rows:
+        if not row["listName"] in names:
+            names.append(row["listName"])
 
-    #     # ensure stock was submitted
-    #     if not request.form.get("symbol"):
-    #         return apology("must provide symbol")
-    #     elif not request.form.get("shares"):
-    #         return apology("must provide number of shares")
-    #     else:
-    #         stock = lookup(request.form.get("symbol"))
-    #         shares = int(request.form.get("shares"))
-    #         cash = db.execute("SELECT cash FROM users WHERE id = :id", id=session["user_id"])
-    # # else if user reached route via GET (as by clicking a link or via redirect)
-    # else:
-    return render_template("ingredients.html")
+    render_template("ingredients.html", names=names)
+
+    if request.method == "POST":
+
+        ingredient = request.form.get("listSubmitIngredient")
+        measure = request.form.get("listSubmitMeasure")
+        unit = request.form.get("listSubmitUnit")
+        list_name = request.form.get("listSubmitListname")
+
+        db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+        check_id = db.execute("SELECT rowid FROM ingredients WHERE ingredient = :i", i=ingredient)
+        db.execute("INSERT INTO lists (ingredientId, measure, unit, userId, listName) VALUES(:ingredientId, :measure, :unit, :id, :listName)", ingredientId=check_id, measure=measure, unit=unit, id=session["user_id"], listName=list_name)
+        return render_template("ingredients.html", names=names)
+
+    else:
+        return render_template("ingredients.html", names=names)
+
 
 if __name__=="__main__":
     app.run()

@@ -18,10 +18,7 @@
 </head>
 <body>
     {% if session.user_id %}
-        <div class="navbar-user">
-            <img src="{{ url_for('static', filename='images/navbar-user.jpg') }}">
-        </div>
-        <nav class="navbar navbar-dark navbar-expand-lg">
+        <nav class="navbar navbar-user bg-user navbar-dark navbar-expand-lg">
             <span class="navbar-brand">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -44,7 +41,7 @@
             </div>
         </nav>
     {% else %}
-        <nav class="navbar navbar-dark navbar-expand-lg">
+        <nav class="navbar bg-nouser navbar-dark navbar-expand-lg">
             <span class="navbar-brand">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

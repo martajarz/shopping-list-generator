@@ -1,8 +1,17 @@
 {% extends "layout.html" %}
 
 {% block main %}
-        <div>
-           blablabla
+<div class="container wrapper">
+        <div class="row">
+            <div class="col-md"></div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                <h5>Add new list:</h5>
+                <form id="addList">
+                    <label class="sr-only" for="q">Name of the list</label>
+                    <input class="form-control typeahead" placeholder="Enter name of the new list" type="text">
+                </form>
+            </div>    
+            <div class="col-md"></div>
         </div>
 {% endblock %}
 

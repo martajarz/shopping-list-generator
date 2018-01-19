@@ -1,12 +1,6 @@
 require('../sass/main.scss')
 
-// $SCRIPT_ROOT = {{ request.script_root|tojson|safe }}
-
-// $('.carousel').carousel({
-//     interval: 5000
-// })
-
-// based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
+// registration validation based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
 const formValidation = (function() {
     const showFieldValidation = function(input, inputIsValid) {
         if (!inputIsValid) {
@@ -23,14 +17,6 @@ const formValidation = (function() {
         var parameters = {
             u: input.value
         };
-        let status = false;
-
-        $.getJSON($SCRIPT_ROOT + '/check_username', parameters, function() {
-            status = true;
-        });
-
-        console.log(status);
-    
 
         if (!mailReg.test(input.value)) {
             showFieldValidation(input, false);
@@ -126,7 +112,6 @@ const formValidation = (function() {
             classValid : _options.classValid || 'valid'
         }
         if (options.form == null || options.form == undefined || options.form.length == 0) {
-            console.warn('formValidation: Źle przekazany formularz');
             return false;
         }
 
@@ -145,51 +130,41 @@ const formValidation = (function() {
 
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.querySelector('.form');
-    formValidation.init({form : form})
+    formValidation.init({form : form});
 
-    $("#searchIngredient").typeahead({
-        highlight: false,
+    // typeahead for searching ingredients
+    $('#searchIngredient .typeahead').typeahead({
+        highlight: true,
         minLength: 1
     },
     {
-        display: function(suggestion) { return null; },
-        limit: 10,
+        name: 'ingredients',
         source: searchIngredient,
+        display: 'ingredient',
         templates: {
-            name: 'searchIngredient',
-            displayKey: 'ingredient',
-            suggestion: Handlebars.compile(
-                "<div><strong>" +
-                "{{ingredient}}</strong>, {{category}}" +
-                "</div>"
-            )
+            suggestion: Handlebars.compile('<div><strong>{{ingredient}}</strong>, {{category}}</div>')
         }
     });
-    //    $("#searchIngredient").on("typeahead:selected", function(eventObject, suggestion, name) {
 
-        
-    // });
-});
-
-
-function searchIngredient(query, syncResults, asyncResults)
-{
-    // get places matching query (asynchronously)
-    var parameters = {
-        q: query
-    };
-    $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
-    .done(function(data, textStatus, jqXHR) {
-
-        // call typeahead's callback with search results (i.e., places)
-        asyncResults(data);
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-
-        // log error to browser's console
-        console.log(errorThrown.toString());
-
-        // call typeahead's callback with no results
-        asyncResults([]);
+    // add choosen ingredient name to DOM
+    $('#searchIngredient .typeahead').bind("typeahead:select", function(ev, suggestion) {
+        document.querySelector('#choosenIngredient').value = suggestion.ingredient;
+        document.querySelector('#choosenIngredient2').value = suggestion.ingredient;
     });
-}
+
+    function searchIngredient(query, syncResults, asyncResults) {
+        // get places matching query (asynchronously)
+        var parameters = {
+            q: query
+        };
+        $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
+        .done(function(data, textStatus, jqXHR) {
+            // call typeahead's callback with search results (i.e., places)
+            asyncResults(data);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // call typeahead's callback with no results
+            asyncResults([]);
+        });
+    }
+});
