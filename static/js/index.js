@@ -18,35 +18,10 @@ const formValidation = (function() {
             u: input.value
         };
 
-        
-        // $.ajax({
-        //     accepts: {
-        //       mycustomtype: 'application/x-some-custom-type'
-        //     },
-        
-        //     // Instructions for how to deserialize a `mycustomtype`
-        //     converters: {
-        //       'text mycustomtype': function(result) {
-        //         // Do Stuff
-        //         return newresult;
-        //       }
-        //     },
-        
-        //     // Expect a `mycustomtype` back from server
-        //     dataType: 'mycustomtype'
-        //   });
-
-        // $.ajax({
-        //     url: "/api/getWeather",
-        //     data: {
-        //       zipcode: 97201
-        //     },
-        //     success: function( result ) {
-        //       $( "#weather-temp" ).html( "<strong>" + result + "</strong> degrees" );
-        //     }
-        //   });
-
         if (!mailReg.test(input.value)) {
+            showFieldValidation(input, false);
+            return false;
+        } else if (!checkInDatabase('/check_username', input)) {
             showFieldValidation(input, false);
             return false;
         } else {
@@ -196,3 +171,17 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+function checkInDatabase(url, input) {
+    $.ajax({
+        url: $SCRIPT_ROOT + url,
+        data: {
+            q: input.value
+        },
+        success: function(data) {
+            if (JSON.stringify(data) !== '[]') {
+                return true;
+            }
+        }
+    });
+}

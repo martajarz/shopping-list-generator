@@ -106,19 +106,22 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/check_username" )
-@login_required
 def check_username():
     """Check if email exist in database."""
-    q = request.args.get("q")
-    rows = db.execute("SELECT username FROM users WHERE username = :q", q=q)
-    return jsonify(rows)
+    username = request.args.get("q")
+    row = db.execute("SELECT username FROM users WHERE username = :q", q=username)
+    return jsonify(row)
+    # if row[0]["username"] == username:
+    #     return 1
+    # else:
+    #     return 0
 
 @app.route("/search_ingredient")
 @login_required
 def search_ingredient():
     """Search for ingredients that match query."""
-    q = request.args.get("q").replace("+", "* ") + "*"
-    rows = db.execute("SELECT * FROM ingredients_search WHERE ingredients_search MATCH :q", q=q)
+    ingredient = request.args.get("q").replace("+", "* ") + "*"
+    rows = db.execute("SELECT * FROM ingredients_search WHERE ingredients_search MATCH :q", q=ingredient)
     return jsonify(rows)
 
 # @app.route("/list_submit_ingredient", methods=["POST"])
