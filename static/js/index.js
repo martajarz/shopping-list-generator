@@ -1,8 +1,23 @@
 require('../sass/main.scss')
 
-// registration validation based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
+function returnValue(input) {
+    return input;
+}
+
+function checkInDatabase(url, input,) {
+    return $.ajax({
+        url: $SCRIPT_ROOT + url,
+        data: {
+            q: input.value
+        },
+        type: 'GET'
+    });
+}
+
+// validation based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
 const formValidation = (function() {
-    const showFieldValidation = function(input, inputIsValid) {
+    const showFieldValidation = function(input, inputIsValid, selector, msg) {
+        document.getElementById(selector).innerHTML = msg;
         if (!inputIsValid) {
             input.parentNode.classList.remove(options.classValid);
             input.parentNode.classList.add(options.classError);
@@ -14,30 +29,41 @@ const formValidation = (function() {
 
     const testInputEmail = function(input) {
         const mailReg = new RegExp('^[0-9a-zA-Z_.-]+@[0-9a-zA-Z.-]+\.[a-zA-Z]{2,3}$','gi');
-        var parameters = {
-            u: input.value
-        };
 
-        if (!mailReg.test(input.value)) {
-            showFieldValidation(input, false);
-            return false;
-        } else if (!checkInDatabase('/check_username', input)) {
-            showFieldValidation(input, false);
+        const msgInvalidAddress = 'Please enter the correct address';
+        const msgUsedAddress = 'The address is already in the database';
+        const msgCorrect = ' ';
+
+        const addressTest = mailReg.test(input.value)
+        const usernamePromised = checkInDatabase('/check_username', input);
+
+        if (!addressTest) {
+            showFieldValidation(input, false, 'msgEmail', msgInvalidAddress);
             return false;
         } else {
-            showFieldValidation(input, true);
-            return true;
+            usernamePromised.done(function(data){
+                if (JSON.stringify(data) !== '[]') {
+                    showFieldValidation(input, false, 'msgEmail', msgUsedAddress);
+                    return false;
+                } else {
+                    showFieldValidation(input, true, 'msgEmail', msgCorrect);
+                    return true;
+                }
+            });
         }
     };
 
     const testInputPassword = function(input) {
         const inputPassword = options.form.querySelector('#registerInputPassword');
         
+        const msgInvalidPassoword = 'Please enter the correct password';
+        const msgCorrect = ' ';
+
         if (inputPassword.value.length < 8) {
-            showFieldValidation(input, false);
+            showFieldValidation(input, false, 'msgPassword', msgInvalidPassoword);
             return false;
         } else {
-            showFieldValidation(input, true);
+            showFieldValidation(input, true, 'msgPassword', msgCorrect);
             return true;
         }
     };
@@ -45,19 +71,37 @@ const formValidation = (function() {
     const testConfirmPassword = function(input) {
         const inputPassword = options.form.querySelector('#registerInputPassword');
         const confirmPassword = options.form.querySelector('#registerConfirmPassword');
-        
+
         if (inputPassword.value.length < 8 || confirmPassword.value == '' || inputPassword.value !== confirmPassword.value) {
-            showFieldValidation(input, false);
+            showFieldValidation(input, false, 'msgConfirm', '');
             return false;
         } else {
-            showFieldValidation(input, true);
+            showFieldValidation(input, true, 'msgConfirm', '');
             return true;
         }
     }
 
+    const testNewList = function(input) {
+        const msgUsedName = 'List with that name already exist';
+        const msgCorrect = ' ';
+
+        const listnamePromised = checkInDatabase('/check_listname', input);
+
+        listnamePromised.done(function(data){
+            if (JSON.stringify(data) !== '[]') {
+                console.log("jest");
+                showFieldValidation(input, false, 'msgListname', msgUsedName);
+                return false;
+            } else {
+                console.log("nie ma");
+                showFieldValidation(input, true, 'msgListname', msgCorrect);
+                return true;
+            }
+        });
+    };
+
     const prepareElements = function() {
         const elements = options.form.querySelectorAll(':scope [required]');
-        // const passwordId = options.form.querySelector('#registerInputPassword');
 
         [].forEach.call(elements, function(element) {
             if (element.nodeName.toUpperCase() == 'INPUT') {
@@ -75,6 +119,10 @@ const formValidation = (function() {
                 if (type == 'PASSWORD' && elementId == 'registerConfirmPassword') {
                     element.addEventListener('keyup', function() {testConfirmPassword(element)});
                     element.addEventListener('blur', function() {testConfirmPassword(element)});
+                }
+                if (type == 'TEXT' && elementId == 'addNewList') {
+                    element.addEventListener('keyup', function() {testNewList(element)});
+                    element.addEventListener('blur', function() {testNewList(element)});
                 }
             }
         });
@@ -96,6 +144,9 @@ const formValidation = (function() {
                     }
                     if (type == 'PASSWORD') {
                         if (!testInputPassword(element)) validated = false;
+                    }
+                    if (type == 'TEXT') {
+                        if (!testNewList(element)) validated = false;
                     }
                 }
             });
@@ -172,16 +223,3 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-function checkInDatabase(url, input) {
-    $.ajax({
-        url: $SCRIPT_ROOT + url,
-        data: {
-            q: input.value
-        },
-        success: function(data) {
-            if (JSON.stringify(data) !== '[]') {
-                return true;
-            }
-        }
-    });
-}

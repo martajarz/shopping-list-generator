@@ -22,16 +22,19 @@
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
                 <form class="form" action="{{ url_for('register') }}" method="post">
                     <div class="form-group-row">
+                        <small>Enter your email address:</small>
                         <input type="email" class="form-control" id="registerInputEmail" name="username" placeholder="Enter email" required>
-                        <small class="register-email">Enter your email address.</small>
+                        <small id="msgEmail"></small>
                     </div>
                     <div class="form-group-row">
+                        <small>Create a password (At least 8 characters long).</small>
                         <input type="password" class="form-control" id="registerInputPassword" name="password" placeholder="Enetr password" required>
-                        <small class="register-password">Create a password (At least 8 characters long).</small>
+                        <small id="msgPassword"></small>
                     </div>
                     <div class="form-group-row">
+                        <small>Confirm your password.</small>
                         <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter password (again)" required>
-                        <small class="register-confirmation">Confirm your password.</small>
+                        <small id="msgConfirm"></small>
                     </div>
                     <button type="submit" class="btn btn-color">Submit</button>
                 </form>

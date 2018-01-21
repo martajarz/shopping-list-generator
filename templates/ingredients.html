@@ -19,11 +19,11 @@
                     <h6>Add ingredient to list:</h6>
                     <form action="{{ url_for('ingredients') }}" method="post">
                         <div>
-                            <input class="form-control" type="text" readonly id="choosenIngredient" placeholder="Ingreadient from search" name="listSubmitIngredient">
+                            <input class="form-control" type="text" readonly id="choosenIngredient" placeholder="Ingreadient from search" name="listSubmitIngredient" required>
                         </div>
                         <div class="form-row">
                             <div class="col-5">
-                                <input type="number" class="form-control" placeholder="Measure" name="listSubmitIngMeasure">
+                                <input type="number" class="form-control" placeholder="Measure" name="listSubmitMeasure" required>
                             </div>
                             <div class="col-7">
                                 <select class="form-control" name="listSubmitUnit">

@@ -6,10 +6,13 @@
             <div class="col-md"></div>
             <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
                 <h5>Add new list:</h5>
-                <form id="addList">
-                    <label class="sr-only" for="q">Name of the list</label>
-                    <input class="form-control typeahead" placeholder="Enter name of the new list" type="text">
-                    <input class="btn btn-color" type="submit" value="Submit">
+                <form class="form" id="addList" action="{{ url_for('lists') }}" method="post">
+                    <div class="form-group-row">    
+                        <small>Name of the list</small>
+                        <input type="text" class="form-control" id="addNewList" name="listName" placeholder="Enter name of the new list" required>
+                        <small id="msgListname"></small>
+                    </div>
+                    <button class="btn btn-color" type="submit">Submit</button>
                 </form>
             </div>    
             <div class="col-md"></div>

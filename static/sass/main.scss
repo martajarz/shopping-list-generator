@@ -150,6 +150,9 @@ body {
             border-color: $error-red;
             border-width: 2px;
         }
+    .error small:nth-child(3) {
+        color: $error-red;
+    }
     .valid {
         color: $valid-green;
         }
@@ -266,4 +269,8 @@ span.twitter-typeahead {
 
 .form-control {
     margin: 5px 0;
+}
+
+.form-group-row:nth-child(-n+2) {
+    height: 110px;
 }
