@@ -1,9 +1,5 @@
 require('../sass/main.scss')
 
-function returnValue(input) {
-    return input;
-}
-
 function checkInDatabase(url, input,) {
     return $.ajax({
         url: $SCRIPT_ROOT + url,
@@ -44,12 +40,15 @@ const formValidation = (function() {
             usernamePromised.done(function(data){
                 if (JSON.stringify(data) !== '[]') {
                     showFieldValidation(input, false, 'msgEmail', msgUsedAddress);
-                    return false;
                 } else {
                     showFieldValidation(input, true, 'msgEmail', msgCorrect);
-                    return true;
                 }
             });
+        }
+        if (input.parentNode.querySelector('.error')) {
+            return false;
+        } else {
+            return true;
         }
     };
 
@@ -86,18 +85,23 @@ const formValidation = (function() {
         const msgCorrect = ' ';
 
         const listnamePromised = checkInDatabase('/check_listname', input);
-
+        
         listnamePromised.done(function(data){
             if (JSON.stringify(data) !== '[]') {
                 console.log("jest");
-                showFieldValidation(input, false, 'msgListname', msgUsedName);
+                showFieldValidation(input, false, 'msgListName', msgUsedName);
                 return false;
             } else {
                 console.log("nie ma");
-                showFieldValidation(input, true, 'msgListname', msgCorrect);
+                showFieldValidation(input, true, 'msgListName', msgCorrect);
                 return true;
             }
         });
+        if (input.parentNode.querySelector('.error')) {
+            return false;
+        } else {
+            return true;
+        }
     };
 
     const prepareElements = function() {
@@ -223,3 +227,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
+const viewList = document.querySelector('#viewList'); 
+
+function getList() {
+    console.log('blabla');
+}
+if (viewList) {
+    viewList.addEventListener('change', getList)
+}

@@ -91,7 +91,7 @@ def register():
         db.execute("INSERT INTO list_name (listName, userId) VALUES (:listName, :id)", listName="default", id=session["user_id"])
 
         # redirect user to home page
-        return redirect(url_for("index"))
+        return render_template("register.html")
 
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
@@ -109,7 +109,6 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/check_username")
-@login_required
 def check_username():
     """Check if email exist in database."""
     username = request.args.get("q")
@@ -123,6 +122,12 @@ def check_listname():
     row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
     return jsonify(row)
 
+# @app.route("/get_list")
+# def get_list():
+#     """Get list from db."""
+#     listname = request.args.get("q")
+#     row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
+#     return jsonify(row)
 
 @app.route("/search_ingredient")
 @login_required
@@ -155,17 +160,26 @@ def search_ingredient():
 @login_required
 def lists():
     """Manage lists."""
+        # get list
+    names = []
+    rows = db.execute("SELECT listName FROM list_name WHERE userId = :id", id=session["user_id"])
+
+    for row in rows:
+        if not row["listName"] in names:
+            names.append(row["listName"])
+
+    render_template("lists.html", names=names)
 
     if request.method == "POST":
 
         if not request.form.get("listName"):
-            return render_template("lists.html")
+            return render_template("lists.html", names=names)
         else:
             input_list_name = request.form.get("listName")
-            db.execute("INSERT INTO list_name (listName, userId) WHERE listName = :l AND userId = :id)", l=input_list_name, id=session["user_id"])
-            return render_template("lists.html")
+            db.execute("INSERT INTO list_name (listName, userId) VALUES (:l, :id)", l=input_list_name, id=session["user_id"])
+            return render_template("lists.html", names=names)
     else:
-        return render_template("lists.html")
+        return render_template("lists.html", names=names)
 
 @app.route("/recipes", methods=["GET", "POST"])
 @login_required
