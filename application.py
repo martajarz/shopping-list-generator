@@ -122,12 +122,12 @@ def check_listname():
     row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
     return jsonify(row)
 
-# @app.route("/get_list")
-# def get_list():
-#     """Get list from db."""
-#     listname = request.args.get("q")
-#     row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
-#     return jsonify(row)
+@app.route("/get_list")
+def get_list():
+    """Get list from db."""
+    listname = request.args.get("q")
+    row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
+    return jsonify(row)
 
 @app.route("/search_ingredient")
 @login_required

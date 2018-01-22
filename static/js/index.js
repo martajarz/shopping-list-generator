@@ -229,7 +229,37 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const viewList = document.querySelector('#viewList'); 
 
-function getList() {
+
+function searchIngredient(query, syncResults, asyncResults) {
+    // get places matching query (asynchronously)
+    var parameters = {
+        q: query
+    };
+    $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
+    .done(function(data, textStatus, jqXHR) {
+        // call typeahead's callback with search results (i.e., places)
+        asyncResults(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        // call typeahead's callback with no results
+        asyncResults([]);
+    });
+}
+
+function getList(query, syncResults, ayncResults) {
+    var parameters = {
+        q: query
+    };
+    $.getJSON($SCRIPT_ROOT + '/get_list', parameters)
+    .done(function(data, textStatus, jqXHR) {
+        // call typeahead's callback with search results (i.e., places)
+        asyncResults(data);
+    })
+    .fail(function(jqXHR, textStatus, errorThrown) {
+        // call typeahead's callback with no results
+        asyncResults([]);
+    });
+    
     console.log('blabla');
 }
 if (viewList) {
