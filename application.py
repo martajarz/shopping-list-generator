@@ -91,7 +91,7 @@ def register():
         db.execute("INSERT INTO list_name (listName, userId) VALUES (:listName, :id)", listName="default", id=session["user_id"])
 
         # redirect user to home page
-        return render_template("register.html")
+        return render_template("lists.html")
 
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:

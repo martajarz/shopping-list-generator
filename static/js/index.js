@@ -1,14 +1,14 @@
 require('../sass/main.scss')
 
-function checkInDatabase(url, input,) {
-    return $.ajax({
-        url: $SCRIPT_ROOT + url,
-        data: {
-            q: input.value
-        },
-        type: 'GET'
-    });
-}
+// function checkInDatabase(url, input,) {
+//     return $.ajax({
+//         url: $SCRIPT_ROOT + url,
+//         data: {
+//             q: input.value
+//         },
+//         type: 'GET'
+//     });
+// }
 
 // validation based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
 const formValidation = (function() {
@@ -31,25 +31,34 @@ const formValidation = (function() {
         const msgCorrect = ' ';
 
         const addressTest = mailReg.test(input.value)
-        const usernamePromised = checkInDatabase('/check_username', input);
+        // const usernamePromised = checkInDatabase('/check_username', input);
+
+        function getData() {
+            return $.ajax({
+                url : $SCRIPT_ROOT + '/check_username',
+                data: {
+                    q: input.value
+                },
+                type: 'GET'
+            });
+        }
 
         if (!addressTest) {
             showFieldValidation(input, false, 'msgEmail', msgInvalidAddress);
             return false;
-        } else {
-            usernamePromised.done(function(data){
-                if (JSON.stringify(data) !== '[]') {
-                    showFieldValidation(input, false, 'msgEmail', msgUsedAddress);
-                } else {
-                    showFieldValidation(input, true, 'msgEmail', msgCorrect);
-                }
-            });
         }
-        if (input.parentNode.querySelector('.error')) {
-            return false;
-        } else {
-            return true;
+
+        function handleData(data) {
+            if (JSON.stringify(data) !== '[]') {
+                showFieldValidation(input, false, 'msgEmail', msgUsedAddress);
+                return false;
+            } else {
+                showFieldValidation(input, true, 'msgEmail', msgCorrect);
+                return true;
+            }
         }
+        
+        return getData().done(handleData);
     };
 
     const testInputPassword = function(input) {
