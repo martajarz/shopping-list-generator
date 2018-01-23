@@ -58,7 +58,7 @@ const formValidation = (function() {
             }
         }
         
-        return getData().done(handleData);
+        return getData().done(handleData);  
     };
 
     const testInputPassword = function(input) {
@@ -93,24 +93,27 @@ const formValidation = (function() {
         const msgUsedName = 'List with that name already exist';
         const msgCorrect = ' ';
 
-        const listnamePromised = checkInDatabase('/check_listname', input);
-        
-        listnamePromised.done(function(data){
+        function getData() {
+            return $.ajax({
+                url : $SCRIPT_ROOT + '/check_username',
+                data: {
+                    q: input.value
+                },
+                type: 'GET'
+            });
+        }
+
+        function handleData(data) {
             if (JSON.stringify(data) !== '[]') {
-                console.log("jest");
                 showFieldValidation(input, false, 'msgListName', msgUsedName);
                 return false;
             } else {
-                console.log("nie ma");
                 showFieldValidation(input, true, 'msgListName', msgCorrect);
                 return true;
             }
-        });
-        if (input.parentNode.querySelector('.error')) {
-            return false;
-        } else {
-            return true;
         }
+        
+        return getData().done(handleData);  
     };
 
     const prepareElements = function() {
