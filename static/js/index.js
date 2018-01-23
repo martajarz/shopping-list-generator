@@ -239,8 +239,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-const viewList = document.querySelector('#viewList'); 
-
 
 function searchIngredient(query, syncResults, asyncResults) {
     // get places matching query (asynchronously)
@@ -258,22 +256,53 @@ function searchIngredient(query, syncResults, asyncResults) {
     });
 }
 
-function getList(query, syncResults, ayncResults) {
-    var parameters = {
-        q: query
-    };
-    $.getJSON($SCRIPT_ROOT + '/get_list', parameters)
-    .done(function(data, textStatus, jqXHR) {
-        // call typeahead's callback with search results (i.e., places)
-        asyncResults(data);
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-        // call typeahead's callback with no results
-        asyncResults([]);
-    });
+const viewList = document.querySelector('#viewList'); 
+
+function getList() {
     
-    console.log('blabla');
+    function getData(input) {
+        return $.ajax({
+            url: $SCRIPT_ROOT + '/get_list',
+            data: {
+                q: input
+            },
+            type: 'GET'
+        });
+    }
+
+    function handleData(data) {
+        console.log(data);
+    }
+
+    getData(this.value).done(handleData);
 }
 if (viewList) {
     viewList.addEventListener('change', getList)
 }
+
+// const viewList = document.querySelector('#viewList');
+
+// function getList(input) {
+
+//     function getData() {
+//         return $.ajax({
+//             url: $SCRIPT_ROOT + '/get_list',
+//             data: {
+//                 q: input
+//             },
+//             type: 'GET'
+//         });
+//     }
+
+//     function handleData(data) {
+//         console.log(data);
+//     }
+
+//     getData().done(handleData);
+// }
+
+// if (viewList) {
+//     viewList.addEventListener('change', getList(viewList.value));
+// }
+
+
