@@ -56,9 +56,9 @@ const formValidation = (function() {
                 showFieldValidation(input, true, 'msgEmail', msgCorrect);
                 return true;
             }
-        }
+        }       
         
-        return getData().done(handleData);  
+        return getData().done(handleData);       
     };
 
     const testInputPassword = function(input) {
@@ -102,7 +102,7 @@ const formValidation = (function() {
                 type: 'GET'
             });
         }
-
+        
         function handleData(data) {
             if (JSON.stringify(data) !== '[]') {
                 showFieldValidation(input, false, 'msgListName', msgUsedName);
@@ -112,7 +112,7 @@ const formValidation = (function() {
                 return true;
             }
         }
-        
+                
         return getData().done(handleData);  
     };
 
@@ -156,13 +156,16 @@ const formValidation = (function() {
                 if (element.nodeName.toUpperCase() == 'INPUT') {
                     const type = element.type.toUpperCase();
                     if (type == 'EMAIL') {
-                        if (!testInputEmail(element)) validated = false;
+                        if (testInputEmail(element) == false) validated = false;
                     }
                     if (type == 'PASSWORD') {
-                        if (!testInputPassword(element)) validated = false;
+                        if (testInputPassword(element) == false) validated = false;
+                    }
+                    if (type == 'PASSWORD') {
+                        if (testConfirmPassword(element) == false) validated = false;
                     }
                     if (type == 'TEXT') {
-                        if (!testNewList(element)) validated = false;
+                        if (testNewList(element) == false) validated = false;
                     }
                 }
             });
@@ -271,7 +274,18 @@ function getList() {
     }
 
     function handleData(data) {
-        console.log(data);
+        document.getElementById("outputTable").innerHTML = "";
+        console.log(data.length);
+
+        var newTable = '<table class="table">';
+        for(i = 0; i < data.length; i++) {
+            newTable += '<tr><td>' + data[i].ingredient + '</td>';
+            newTable += '<td>' + data[i].measure + "</td>";
+            newTable += '<td>' + data[i].unit + '</td></tr>';
+        }
+        newTable += '</table>';
+
+        document.getElementById("outputTable").innerHTML = newTable;  
     }
 
     getData(this.value).done(handleData);
@@ -279,30 +293,3 @@ function getList() {
 if (viewList) {
     viewList.addEventListener('change', getList)
 }
-
-// const viewList = document.querySelector('#viewList');
-
-// function getList(input) {
-
-//     function getData() {
-//         return $.ajax({
-//             url: $SCRIPT_ROOT + '/get_list',
-//             data: {
-//                 q: input
-//             },
-//             type: 'GET'
-//         });
-//     }
-
-//     function handleData(data) {
-//         console.log(data);
-//     }
-
-//     getData().done(handleData);
-// }
-
-// if (viewList) {
-//     viewList.addEventListener('change', getList(viewList.value));
-// }
-
-
