@@ -4,66 +4,46 @@
     <div class="container wrapper">
         <div class="row">
             <div class="col-md"></div>
-            <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                <h5>Enter the name of the ingredient:</h5>
-                <form id="searchIngredient">
-                    <label class="sr-only" for="q">Name, category</label>
-                    <input class="form-control typeahead" placeholder="Name, category" type="text">
+            <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                <h5>Add ingredient to list:</h5>
+                <h6>Enter the name of the ingredient:</h6>
+                <form action="{{ url_for('ingredients') }}" method="post" id="searchIngredient">
+                    <label class="sr-only">Name, category</label>
+                    <input class="form-control typeahead" placeholder="Name, category" type="text" name="listSubmitIngredient" required autocomplete="off">
+                    <div class="form-row">
+                        <div class="col-5">
+                            <input type="number" class="form-control" placeholder="Measure" name="listSubmitMeasure" required>
+                        </div>
+                        <div class="col-7">
+                            <select class="form-control" name="listSubmitUnit">
+                                <option selected>Choose unit</option>
+                                <option>teaspoon</option>
+                                <option>tablespoon</option>
+                                <option>item</option>
+                                <option>package</option>
+                                <option>cup</option>
+                                <option>ml</option>
+                                <option>dl</option>
+                                <option>l</option>
+                                <option>pound</option>
+                                <option>ounce</option>
+                                <option>mg</option>
+                                <option>g</option>
+                                <option>kg</option>
+                            </select>
+                        </div>
+                    </div>
+                     <select class="form-control" name="listSubmitListname">
+                            <option selected>Choose one of the lists</option>
+                            {% for name in names %}
+                            <option value={{name}}>{{name}}</td>
+                            {% endfor %}
+                    </select>
+                    <input class="btn btn-color" type="submit" value="Submit">
                 </form>
-            </div>    
+            </div>
             <div class="col-md"></div>
         </div>
-        <div class="row">
-                <div class="col-md"></div>
-                <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                    <h6>Add ingredient to list:</h6>
-                    <form action="{{ url_for('ingredients') }}" method="post">
-                        <div>
-                            <input class="form-control" type="text" readonly id="choosenIngredient" placeholder="Ingreadient from search" name="listSubmitIngredient" required>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-5">
-                                <input type="number" class="form-control" placeholder="Measure" name="listSubmitMeasure" required>
-                            </div>
-                            <div class="col-7">
-                                <select class="form-control" name="listSubmitUnit">
-                                    <option selected>Choose unit</option>
-                                    <option>teaspoon</option>
-                                    <option>tablespoon</option>
-                                    <option>item</option>
-                                    <option>package</option>
-                                    <option>cup</option>
-                                    <option>ml</option>
-                                    <option>dl</option>
-                                    <option>l</option>
-                                    <option>pound</option>
-                                    <option>ounce</option>
-                                    <option>mg</option>
-                                    <option>g</option>
-                                    <option>kg</option>
-                                </select>
-                            </div>
-                        </div>
-                        <select class="form-control" name="listSubmitListname">
-                                <option selected>Choose one of the lists</option>
-                                {% for name in names %}
-                                <option value={{name}}>{{name}}</td>
-                                {% endfor %}
-                        </select>
-                        <input class="btn btn-color" type="submit" value="Submit">
-                    </form>
-                </div>
-                <div class="col-md"></div>
-            </div>
-            <div class="row">
-                <div class="col-md"> </div> 
-                <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-4">
-                    <h6>Or search recepies with ingredient:</h6>
-                    <input class="form-control" type="text" readonly id="choosenIngredient2" placeholder="Ingreadient from search" name="listSubmitIngredient">
-                    <input class="btn btn-color" id="searchRecipeByIngredient" type="submit" value="Search">
-                </div>    
-                <div class="col-md"></div>
-            </div>
     </div>
 {% endblock %}
 

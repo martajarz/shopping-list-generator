@@ -91,7 +91,7 @@ def register():
         db.execute("INSERT INTO list_name (listName, userId) VALUES (:listName, :id)", listName="default", id=session["user_id"])
 
         # redirect user to home page
-        return redirect(url_for("index"))
+        return redirect(url_for("lists"))
 
     # else if user reached route via GET (as by clicking a link or via redirect)
     else:
@@ -109,7 +109,6 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/check_username")
-@login_required
 def check_username():
     """Check if email exist in database."""
     username = request.args.get("q")
@@ -123,53 +122,96 @@ def check_listname():
     row = db.execute("SELECT listName FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
     return jsonify(row)
 
+@app.route("/get_list")
+def get_list():
+    """Get list from db."""
+    listname = request.args.get("q")
+    check_list_id = db.execute("SELECT listId FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
+    rows = db.execute("SELECT lists.measure, lists.unit, ingredients.ingredient FROM lists INNER JOIN ingredients ON lists.ingredientId=ingredients.ingredientId WHERE lists.listID = :l AND lists.userId = :id", l=check_list_id[0]["listId"], id=session["user_id"])
+    return jsonify(rows)
+
+@app.route("/delete_list", methods=["POST"])
+@login_required
+def delete_list():
+    """Delete list from db."""
+    if request.method == "POST":
+
+        if not request.form.get("selectedList"):
+            return render_template("lists.html", names=names)
+        else:
+            listname = request.form.get("selectedList")
+            check_list_id = db.execute("SELECT listId FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
+            db.execute("DELETE FROM list_name WHERE listName=:l AND userId=:id", l=listname, id=session["user_id"])
+            db.execute("DELETE FROM lists WHERE listId=:l AND userId=:id", l=check_list_id[0]["listId"], id=session["user_id"])
+            return redirect(url_for("lists"))
+    else:
+        return redirect(url_for("lists"))
 
 @app.route("/search_ingredient")
 @login_required
-def search_ingredient():
+def search_ingredient():   
     """Search for ingredients that match query."""
     ingredient = request.args.get("q").replace("+", "* ") + "*"
     rows = db.execute("SELECT * FROM ingredients_search WHERE ingredients_search MATCH :q", q=ingredient)
     return jsonify(rows)
 
-# @app.route("/list_submit_ingredient", methods=["POST"])
-# @login_required
-# def list_submit_ingredient():
-#     """Submit ingredient to list."""
-#     if request.method == "POST":
-
-#         ingredient = request.form.get("listSubmitIngredient")
-#         measure = request.form.get("listSubmitMeasure")
-#         unit = request.form.get("listSubmitUnit")
-#         list_name = request.form.get("listSubmitListname")
-
-#         db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
-#         check_id = db.execute("SELECT rowid FROM ingredients WHERE ingredient = :i", i=ingredient)
-#         db.execute("INSERT INTO lists (ingredientId, measure, unit, userId, listName) VALUES(:ingredientId, :measure, :unit, :id, :listName)", ingredientId=check_id, measure=measure, unit=unit, id=session["user_id"], listName=list_name)
-#         return render_template("ingredients.html")
-
-#     else:
-#         return render_template("ingredients.html")
+@app.route("/search_recipe")
+@login_required
+def search_recipe():   
+    """Search for recipes that match query."""
+    recipe = request.args.get("q").replace("+", "* ") + "*"
+    rows = db.execute("SELECT * FROM recipe_search WHERE recipe_search MATCH :q", q=recipe)
+    return jsonify(rows)
 
 @app.route("/lists", methods=["GET", "POST"])
 @login_required
 def lists():
     """Manage lists."""
+        # get list
+    names = []
+    rows = db.execute("SELECT listName FROM list_name WHERE userId = :id", id=session["user_id"])
+
+    for row in rows:
+        if not row["listName"] in names:
+            names.append(row["listName"])
+
+    render_template("lists.html", names=names)
 
     if request.method == "POST":
 
         if not request.form.get("listName"):
-            return render_template("lists.html")
+            return render_template("lists.html", names=names)
         else:
             input_list_name = request.form.get("listName")
-            db.execute("INSERT INTO list_name (listName, userId) WHERE listName = :l AND userId = :id)", l=input_list_name, id=session["user_id"])
-            return render_template("lists.html")
+            db.execute("INSERT INTO list_name (listName, userId) VALUES (:l, :id)", l=input_list_name, id=session["user_id"])
+            return redirect(url_for("lists"))
     else:
-        return render_template("lists.html")
+        return render_template("lists.html", names=names)
+
+@app.route("/get_recipe")
+@login_required
+def get_recipe():   
+    """Get recipe."""
+    if request.method == "GET":
+    # ensure stock was submitted
+        if not request.args.get("q"):
+            return
+        else:
+            name = request.args.get("q")
+            data = db.execute("SELECT recipeId, category, url, image FROM recipe_name WHERE recipeName = :n", n=name)
+            recipe_id = data[0]["recipeId"]
+            rows = db.execute("SELECT recipes.measure, recipes.unit, ingredients.ingredient FROM recipes INNER JOIN ingredients ON ingredients.ingredientId=recipes.ingredientId WHERE recipes.recipeId = :r", r=recipe_id)
+            return jsonify(data, rows)
 
 @app.route("/recipes", methods=["GET", "POST"])
 @login_required
 def recipes():
+    """Manage recipes."""
+    return render_template("recipes.html")
+
+@app.route("/new_recipe", methods=["GET", "POST"])
+@login_required
+def new_recipe():
     """Manage recipes."""
 
     # if request.method == "POST":
@@ -185,7 +227,7 @@ def recipes():
     #         cash = db.execute("SELECT cash FROM users WHERE id = :id", id=session["user_id"])
     # # else if user reached route via GET (as by clicking a link or via redirect)
     # else:
-    return render_template("recipes.html")
+    return render_template("new_recipe.html")
 
 @app.route("/ingredients", methods=["GET", "POST"])
 @login_required
@@ -219,16 +261,16 @@ def ingredients():
             db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
             
             # read ingredient and list id's from databases
-            check_id = db.execute("SELECT rowid FROM ingredients WHERE ingredient = :i", i=ingredient)
-            check_list_id = db.execute("SELECT rowid FROM list_name WHERE listName = :l AND userId = :id", l=list_name, id=session["user_id"])
+            check_id = db.execute("SELECT ingredientId FROM ingredients WHERE ingredient = :i", i=ingredient)
+            check_list_id = db.execute("SELECT listId FROM list_name WHERE listName = :l AND userId = :id", l=list_name, id=session["user_id"])
             
             # insert to list
-            check = db.execute("SELECT * FROM lists WHERE ingredientId = :i AND userId = :id AND listId = :l", i=check_id[0]["rowid"], id=session["user_id"], l=check_list_id[0]["rowid"])
+            check = db.execute("SELECT * FROM lists WHERE ingredientId = :i AND userId = :id AND listId = :l", i=check_id[0]["ingredientId"], id=session["user_id"], l=check_list_id[0]["listId"])
             if check:
                 if check[0]["unit"] == unit:
-                    db.execute("UPDATE lists SET measure = measure + :m WHERE ingredientId = :i AND userId = :id AND listId = :l ", m=measure, i=check_id[0]["rowid"], id=session["user_id"], l=check_list_id[0]["rowid"])
+                    db.execute("UPDATE lists SET measure = measure + :m WHERE ingredientId = :i AND userId = :id AND listId = :l ", m=measure, i=check_id[0]["ingredientId"], id=session["user_id"], l=check_list_id[0]["listId"])
             else:
-                db.execute("INSERT INTO lists (ingredientId, measure, unit, userId, listId) VALUES(:ingredientId, :measure, :unit, :id, :listId)", ingredientId=check_id[0]["rowid"], measure=measure, unit=unit, id=session["user_id"], listId=check_list_id[0]["rowid"])
+                db.execute("INSERT INTO lists (ingredientId, measure, unit, userId, listId) VALUES(:ingredientId, :measure, :unit, :id, :listId)", ingredientId=check_id[0]["ingredientId"], measure=measure, unit=unit, id=session["user_id"], listId=check_list_id[0]["listId"])
             return render_template("ingredients.html", names=names)
 
     else:
