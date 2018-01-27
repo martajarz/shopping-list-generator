@@ -1,15 +1,5 @@
 require('../sass/main.scss')
 
-// function checkInDatabase(url, input,) {
-//     return $.ajax({
-//         url: $SCRIPT_ROOT + url,
-//         data: {
-//             q: input.value
-//         },
-//         type: 'GET'
-//     });
-// }
-
 // validation based on http://kursjs.pl/kurs/formularze/formularze-walidacja.php
 const formValidation = (function() {
     const showFieldValidation = function(input, inputIsValid, selector, msg) {
@@ -31,7 +21,6 @@ const formValidation = (function() {
         const msgCorrect = ' ';
 
         const addressTest = mailReg.test(input.value)
-        // const usernamePromised = checkInDatabase('/check_username', input);
 
         function getData() {
             return $.ajax({
@@ -58,7 +47,7 @@ const formValidation = (function() {
             }
         }       
         
-        return getData().done(handleData);       
+        getData().done(handleData);       
     };
 
     const testInputPassword = function(input) {
@@ -91,11 +80,17 @@ const formValidation = (function() {
 
     const testNewList = function(input) {
         const msgUsedName = 'List with that name already exist';
+        const msgInvalidName = 'Please input name';
         const msgCorrect = ' ';
+
+        if (addNewList.value == '') {
+            showFieldValidation(input, false, 'msgListName', msgInvalidName);
+            return false;
+        }
 
         function getData() {
             return $.ajax({
-                url : $SCRIPT_ROOT + '/check_username',
+                url : $SCRIPT_ROOT + '/check_listname',
                 data: {
                     q: input.value
                 },
@@ -113,7 +108,7 @@ const formValidation = (function() {
             }
         }
                 
-        return getData().done(handleData);  
+        getData().done(handleData);  
     };
 
     const prepareElements = function() {
@@ -148,29 +143,46 @@ const formValidation = (function() {
         options.form.addEventListener('submit', function(e) {
             e.preventDefault();
     
-            let validated = true;
+            let readyToSubmit = true;
+            let checkSubmitEmail = true;
+            let checkSubmitPassword = true;
+            let checkSubmitConfirm = true;
+            let checkSubmitText = true;
     
             const elements = options.form.querySelectorAll(':scope [required]');
-    
+            
+            function checkError(element) {
+                if (element.parentNode.classList.contains('error')) {
+                    return false;
+                } else if (element.value == "") {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
             [].forEach.call(elements, function(element) {
                 if (element.nodeName.toUpperCase() == 'INPUT') {
                     const type = element.type.toUpperCase();
+
                     if (type == 'EMAIL') {
-                        if (testInputEmail(element) == false) validated = false;
+                        checkSubmitEmail = checkError(element);                            
                     }
                     if (type == 'PASSWORD') {
-                        if (testInputPassword(element) == false) validated = false;
+                        checkSubmitPassword = checkError(element);                            
                     }
                     if (type == 'PASSWORD') {
-                        if (testConfirmPassword(element) == false) validated = false;
+                        checkSubmitConfirm = checkError(element);                            
                     }
                     if (type == 'TEXT') {
-                        if (testNewList(element) == false) validated = false;
+                        checkSubmitText = checkError(element);                            
                     }
+                }
+                if (!checkSubmitEmail || !checkSubmitPassword || !checkSubmitConfirm || !checkSubmitText) {
+                    readyToSubmit = false;
                 }
             });
     
-            if (validated) {
+            if (readyToSubmit) {
                 this.submit();
             } else {
                 return false;
@@ -219,14 +231,24 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // add choosen ingredient name to DOM
-    $('#searchIngredient .typeahead').bind("typeahead:select", function(ev, suggestion) {
-        document.querySelector('#choosenIngredient').value = suggestion.ingredient;
-        document.querySelector('#choosenIngredient2').value = suggestion.ingredient;
+    // typeahead for searching ingredients
+    $('#searchRecipe .typeahead').typeahead({
+        highlight: true,
+        minLength: 1
+    },
+    {
+        name: 'recipes',
+        source: searchRecipe,
+        display: 'name',
+        templates: {
+            suggestion: Handlebars.compile('<div><strong>{{name}}</strong>, {{category}}</div>')
+        }
     });
 
+    // add choosen ingredient name to DOM 
+    $('#searchRecipe .typeahead').bind("typeahead:select", getRecipe);
+
     function searchIngredient(query, syncResults, asyncResults) {
-        // get places matching query (asynchronously)
         var parameters = {
             q: query
         };
@@ -240,29 +262,64 @@ document.addEventListener("DOMContentLoaded", function() {
             asyncResults([]);
         });
     }
+
+    function searchRecipe(query, syncResults, asyncResults) {
+        var parameters = {
+            q: query
+        };
+        $.getJSON($SCRIPT_ROOT + '/search_recipe', parameters)
+        .done(function(data, textStatus, jqXHR) {
+            // call typeahead's callback with search results (i.e., places)
+            asyncResults(data);
+        })
+        .fail(function(jqXHR, textStatus, errorThrown) {
+            // call typeahead's callback with no results
+            asyncResults([]);
+        });
+    }
 });
-
-
-function searchIngredient(query, syncResults, asyncResults) {
-    // get places matching query (asynchronously)
-    var parameters = {
-        q: query
-    };
-    $.getJSON($SCRIPT_ROOT + '/search_ingredient', parameters)
-    .done(function(data, textStatus, jqXHR) {
-        // call typeahead's callback with search results (i.e., places)
-        asyncResults(data);
-    })
-    .fail(function(jqXHR, textStatus, errorThrown) {
-        // call typeahead's callback with no results
-        asyncResults([]);
-    });
-}
 
 const viewList = document.querySelector('#viewList'); 
 
-function getList() {
-    
+
+function getRecipe() {
+    function getData(input) {
+        return $.ajax({
+            url: $SCRIPT_ROOT + '/get_recipe',
+            data: {
+                q: input
+            },
+            type: 'GET'
+        });
+    }
+
+    function handleData(data) {
+        document.getElementById("outputHeader").innerHTML = "";
+        document.getElementById("outputRecipe").innerHTML = "";
+
+        var newHeader = '<div><h5>Name: ' + '</h5></div>';
+        newHeader  += '<div>Category: ' + data[0][0].category + '</div>';
+        newHeader  += '<div><img class="recipe-image" src="' + data[0][0].image + '"></div>';
+        newHeader  += '<div>Link: <a href="' + data[0][0].url + '">' + data[0][0].url + '</div>'
+
+        var newTable = '<table class="table">';
+        newTable += ''
+        for(i = 0; i < data[1].length; i++) {
+            newTable += '<tr><td>' + data[1][i].ingredient + '</td>';
+            newTable += '<td>' + data[1][i].measure + '</td>';
+            newTable += '<td>' + data[1][i].unit + '</td></tr>';
+        }
+        newTable += '</table>';
+
+        document.getElementById("outputHeader").innerHTML = newHeader;
+        document.getElementById("outputTable").innerHTML = newTable;  
+    }
+
+    getData(this.value).done(handleData);
+}
+
+
+function getList() {    
     function getData(input) {
         return $.ajax({
             url: $SCRIPT_ROOT + '/get_list',
@@ -274,13 +331,14 @@ function getList() {
     }
 
     function handleData(data) {
-        document.getElementById("outputTable").innerHTML = "";
-        console.log(data.length);
+        document.getElementById("outputRecipe").innerHTML = "";
+        const button = '<div class="form-check"><input class="form-check-input" type="checkbox" value=""></div>'
 
         var newTable = '<table class="table">';
         for(i = 0; i < data.length; i++) {
-            newTable += '<tr><td>' + data[i].ingredient + '</td>';
-            newTable += '<td>' + data[i].measure + "</td>";
+            newTable += '<tr><td>' + button +'</td>';
+            newTable += '<td>' + data[i].ingredient + '</td>';
+            newTable += '<td>' + data[i].measure + '</td>';
             newTable += '<td>' + data[i].unit + '</td></tr>';
         }
         newTable += '</table>';
@@ -290,6 +348,14 @@ function getList() {
 
     getData(this.value).done(handleData);
 }
+
 if (viewList) {
     viewList.addEventListener('change', getList)
 }
+
+
+
+
+
+
+

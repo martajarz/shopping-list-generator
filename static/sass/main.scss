@@ -145,7 +145,8 @@ body {
         color: $error-red;
         }
     .error input[type="email"],
-    .error input[type="password"] {
+    .error input[type="password"],
+    .error input[type="text"] {
             color: $error-red;
             border-color: $error-red;
             border-width: 2px;
@@ -157,7 +158,8 @@ body {
         color: $valid-green;
         }
     .valid input[type="email"],
-    .valid input[type="password"] {
+    .valid input[type="password"],
+    .valid input[type="text"] {
             color: $valid-green;
             border-color: $valid-green;
             border-width: 2px;
@@ -276,7 +278,7 @@ span.twitter-typeahead {
 }
 
 .form-group-row2 {
-    height: 90px;
+    height: 95px;
 }
 
 .table {
@@ -285,4 +287,9 @@ span.twitter-typeahead {
 
 .cross {
     text-decoration: line-through;
+}
+
+.recipe-image {
+    width: 200px;
+    height: auto;
 }
