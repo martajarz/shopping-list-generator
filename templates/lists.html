@@ -1,46 +1,47 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <div class="container wrapper">
-        <div class="row">
-            <div class="col-md"></div>
-            <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
-                <form class="form" action="{{ url_for('lists') }}" method="post">
-                    <div class="form-group-row2">
-                        <small>Add new list:</small>
-                        <input type="text" class="form-control" id="addNewList" name="listName" placeholder="Enter list name" required>
-                        <small id="msgListName"></small>
-                    </div>
-                    <button type="submit" class="btn btn-color">Add</button>
-                </form>
-            </div>
-            <div class="col-md"></div>
-        </div>
-        <div class="row">
-            <div class="col-md"></div>
-            <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
-                <h6>Choose list:</h6>
-                <form class="form" action="/delete_list" method="post">
-                    <div class="input-group">
-                        <select class="custom-select" id="viewList" name="selectedList">
-                            <option selected>Choose one of the lists</option>
-                            {% for name in names %}
-                            <option value={{name}}>{{name}}</option>
-                            {% endfor %}
-                        </select>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-danger" type="submit">delete list</button>
+        <div class="container wrapper">
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <h5>Add new list:</h5>
+                    <form class="form" action="{{ url_for('lists') }}" method="post">
+                        <div class="form-group-row2">
+                            <small>Input name of the list:</small>
+                            <input type="text" class="form-control" id="addNewList" name="listName" placeholder="Enter list name" required>
+                            <small id="msgListName"></small>
                         </div>
-                    </div>
-                </form>
+                        <button type="submit" class="btn btn-color">Add</button>
+                    </form>
+                </div>
+                <div class="col-md"></div>
             </div>
-            <div class="col-md"></div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <h5>View existing list:</h5>
+                    <h6>Choose list:</h6>
+                    <form class="form" action="/delete_list" method="post">
+                        <div class="input-group">
+                            <select class="custom-select" id="viewList" name="selectedList">
+                                <option selected>Choose one of the lists</option>
+                                {% for name in names %}
+                                <option value={{name}}>{{name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-danger" type="submit">delete list</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md"></div>
+            </div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputTable"></div>
+                <div class="col-md"></div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md"></div>
-            <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputTable"></div>
-            <div class="col-md"></div>
-        </div>
-    </div>
-
 {% endblock %}

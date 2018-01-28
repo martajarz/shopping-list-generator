@@ -176,14 +176,14 @@ body {
     h5 {
         text-align: center;
         color: $tussock-color;
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 0px;
         font-weight: bold;
     }
     h6 {
         text-align: center;
         color: $tussock-color;
-        padding-top: 60px;
+        padding-top: 30px;
         padding-bottom: 0px;
     }
 }
@@ -292,4 +292,29 @@ span.twitter-typeahead {
 .recipe-image {
     width: 200px;
     height: auto;
+}
+
+.recipe {
+    text-align: center;
+    font-size: .9em;
+    a {
+        color: $tussock-color;
+    }
+    a:hover {
+        color: $sienna-color;
+    }
+}
+
+.table-recipe {
+    td {
+        text-align: center;
+    }
+}
+
+.recipe-link {
+    color: $tussock-color;
+}
+
+.recipe-link:hover {
+    color: $sienna-color;
 }
