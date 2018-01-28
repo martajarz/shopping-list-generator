@@ -1,27 +1,35 @@
 {% extends "layout.html" %}
 
 {% block main %}
-<div class="container wrapper">
-    <div class="row">
-        <div class="col-md"></div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
-            <form id="searchRecipe">
-                <h5>Search recipe:</h5>
-                <label class="sr-only">Name, category</label>
-                <input class="form-control typeahead" placeholder="Name, category" type="text" autocomplete="off">
-            </form>
+        <div class="container wrapper">
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <form class="form" id="searchRecipe" action="{{ url_for('recipes') }}" method="post">
+                        <h5>Search recipe:</h5>
+                        <label class="sr-only">Name, category</label>
+                        <input class="form-control typeahead" placeholder="Name, category" type="text" autocomplete="off" name="recipeName">
+                        <h5>Add recipe to one of the lists:</h5>
+                        <select class="custom-select" name="recipeList">
+                            <option selected>Choose one of the lists</option>
+                            {% for list in lists %}
+                            <option value={{list}}>{{list}}</option>
+                            {% endfor %}
+                        </select>
+                        <input class="btn btn-color" type="submit" value="Add to list">
+                    </form>
+                </div>
+                <div class="col-md"></div>
+            </div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputHeader"></div>
+                <div class="col-md"></div>
+            </div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputRecipe"></div>
+                <div class="col-md"></div>
+            </div>
         </div>
-        <div class="col-md"></div>
-    </div>
-    <div class="row">
-        <div class="col-md"></div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputHeader"></div>
-        <div class="col-md"></div>
-    </div>
-    <div class="row">
-        <div class="col-md"></div>
-        <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputRecipe"></div>
-        <div class="col-md"></div>
-    </div>
-</div>
 {% endblock %}

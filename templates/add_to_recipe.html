@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block main %}
+        <div class="container wrapper">
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
+                    <form class="form" action="{{ url_for('add_to_recipe') }}" method="post">
+                        <h5>Add ingredient to recipe:</h5>
+                        <h6>Enter the name of the recipe:</h6>
+                        <label class="sr-only">Name, category</label>
+                        <div id="searchRecipe">
+                            {% if name %}
+                            <input class="form-control typeahead" placeholder="Name, category" type="text" autocomplete="off" name="recipeSubmitName" value={{name}} required>
+                            {% else %}
+                            <input class="form-control typeahead" placeholder="Name, category" type="text" autocomplete="off" name="recipeSubmitName" required>
+                            {% endif %}
+                        </div>
+                        <h6>Add parameters:</h6>
+                        <div id="searchIngredient">               
+                            <input type="text" class="form-control typeahead" placeholder="Ingredient" name="recipeSubmitIngredient" autocomplete="off" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-7">
+                                <input type="number" class="form-control" placeholder="Measure" name="recipeSubmitMeasure" required>
+                            </div>
+                            <div class="col-5">
+                                <select class="form-control" name="recipeSubmitUnit">
+                                    <option selected>Choose unit</option>
+                                    <option>teaspoon</option>
+                                    <option>tablespoon</option>
+                                    <option>item</option>
+                                    <option>package</option>
+                                    <option>cup</option>
+                                    <option>ml</option>
+                                    <option>dl</option>
+                                    <option>l</option>
+                                    <option>pound</option>
+                                    <option>ounce</option>
+                                    <option>mg</option>
+                                    <option>g</option>
+                                    <option>kg</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input class="btn btn-color" type="submit" value="Add to recipe">
+                    </form>
+                </div>
+                <div class="col-md"></div>
+            </div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputHeader"></div>
+                <div class="col-md"></div>
+            </div>
+            <div class="row">
+                <div class="col-md"></div>
+                <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6" id="outputRecipe"></div>
+                <div class="col-md"></div>
+            </div>
+        </div>
+{% endblock %}

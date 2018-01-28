@@ -111,6 +111,40 @@ const formValidation = (function() {
         getData().done(handleData);  
     };
 
+    const testNewRecipe = function(input) {
+        const msgUsedName = 'Recipe with that name already exist';
+        const msgInvalidName = 'Please input name';
+        const msgCorrect = ' ';
+
+        if (addNewRecipe.value == '') {
+            showFieldValidation(input, false, 'msgRecipeName', msgInvalidName);
+            return false;
+        }
+
+        function getData() {
+            return $.ajax({
+                url : $SCRIPT_ROOT + '/check_recipe_name',
+                data: {
+                    q: input.value
+                },
+                type: 'GET'
+            });
+        }
+        
+        function handleData(data) {
+            console.log(JSON.stringify(data));
+            if (JSON.stringify(data) !== '[[],[]]') {
+                showFieldValidation(input, false, 'msgRecipeName', msgUsedName);
+                return false;
+            } else {
+                showFieldValidation(input, true, 'msgRecipeName', msgCorrect);
+                return true;
+            }
+        }
+                
+        getData().done(handleData);  
+    };
+
     const prepareElements = function() {
         const elements = options.form.querySelectorAll(':scope [required]');
 
@@ -134,6 +168,10 @@ const formValidation = (function() {
                 if (type == 'TEXT' && elementId == 'addNewList') {
                     element.addEventListener('keyup', function() {testNewList(element)});
                     element.addEventListener('blur', function() {testNewList(element)});
+                }
+                if (type == 'TEXT' && elementId == 'addNewRecipe') {
+                    element.addEventListener('keyup', function() {testNewRecipe(element)});
+                    element.addEventListener('blur', function() {testNewRecipe(element)});
                 }
             }
         });
@@ -281,44 +319,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const viewList = document.querySelector('#viewList'); 
 
-
-function getRecipe() {
-    function getData(input) {
-        return $.ajax({
-            url: $SCRIPT_ROOT + '/get_recipe',
-            data: {
-                q: input
-            },
-            type: 'GET'
-        });
-    }
-
-    function handleData(data) {
-        document.getElementById("outputHeader").innerHTML = "";
-        document.getElementById("outputRecipe").innerHTML = "";
-
-        var newHeader = '<div><h5>Name: ' + '</h5></div>';
-        newHeader  += '<div>Category: ' + data[0][0].category + '</div>';
-        newHeader  += '<div><img class="recipe-image" src="' + data[0][0].image + '"></div>';
-        newHeader  += '<div>Link: <a href="' + data[0][0].url + '">' + data[0][0].url + '</div>'
-
-        var newTable = '<table class="table">';
-        newTable += ''
-        for(i = 0; i < data[1].length; i++) {
-            newTable += '<tr><td>' + data[1][i].ingredient + '</td>';
-            newTable += '<td>' + data[1][i].measure + '</td>';
-            newTable += '<td>' + data[1][i].unit + '</td></tr>';
-        }
-        newTable += '</table>';
-
-        document.getElementById("outputHeader").innerHTML = newHeader;
-        document.getElementById("outputTable").innerHTML = newTable;  
-    }
-
-    getData(this.value).done(handleData);
-}
-
-
 function getList() {    
     function getData(input) {
         return $.ajax({
@@ -331,7 +331,7 @@ function getList() {
     }
 
     function handleData(data) {
-        document.getElementById("outputRecipe").innerHTML = "";
+        document.getElementById("outputTable").innerHTML = "";
         const button = '<div class="form-check"><input class="form-check-input" type="checkbox" value=""></div>'
 
         var newTable = '<table class="table">';
@@ -351,6 +351,46 @@ function getList() {
 
 if (viewList) {
     viewList.addEventListener('change', getList)
+}
+
+
+function getRecipe() {
+
+    var newHeader = '<div><h5>' + this.value + '</h5></div>';
+
+    function getData(input) {
+        return $.ajax({
+            url: $SCRIPT_ROOT + '/get_recipe',
+            data: {
+                q: input
+            },
+            type: 'GET'
+        });
+    }
+
+    function handleData(data) {
+        document.getElementById("outputHeader").innerHTML = "";
+        document.getElementById("outputRecipe").innerHTML = "";
+
+        
+        newHeader  += '<div class="recipe">Category: ' + data[0][0].category + '</div>';
+        newHeader  += '<div class="recipe"><a target="_blank" href="' + data[0][0].url + '">' + data[0][0].url + '</a></div>';
+        newHeader  += '<div class="recipe"><img class="recipe-image" src="' + data[0][0].image + '"></div>';
+
+        var newTable = '<table class="table recipe-table">';
+        newTable += ''
+        for(i = 0; i < data[1].length; i++) {
+            newTable += '<tr><td>' + data[1][i].ingredient + '</td>';
+            newTable += '<td>' + data[1][i].measure + '</td>';
+            newTable += '<td>' + data[1][i].unit + '</td></tr>';
+        }
+        newTable += '</table>';
+
+        document.getElementById("outputHeader").innerHTML = newHeader;
+        document.getElementById("outputRecipe").innerHTML = newTable;  
+    }
+
+    getData(this.value).done(handleData);
 }
 
 
