@@ -31,7 +31,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-db = SQL("sqlite:///ShoppingList.db")
+db = SQL("sqlite:////home/martajarz/mysite/ShoppingList.db")
 
 @app.route("/")
 def index():
@@ -294,18 +294,19 @@ def add_to_recipe():
         if not request.form.get("recipeSubmitName") or not \
                request.form.get("recipeSubmitIngredient") or not \
                request.form.get("recipeSubmitMeasure") or \
-               int(request.form.get("recipeSubmitMeasure")) <= 0 or \
+               float(request.form.get("recipeSubmitMeasure")) <= 0 or \
                request.form.get("recipeSubmitUnit") == 'Choose unit':
             return render_template("add_to_recipe.html")
         else:
             name = request.form.get("recipeSubmitName")
             ingredient = request.form.get("recipeSubmitIngredient")
-            measure = int(request.form.get("recipeSubmitMeasure"))
+            measure = float(request.form.get("recipeSubmitMeasure"))
             unit = request.form.get("recipeSubmitUnit")
 
             # add ingredient to list if it's not 
-            db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
-            db.execute("INSERT INTO ingredients_search (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+            add = db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+            if add:
+                db.execute("INSERT INTO ingredients_search (ingredient) VALUES(:ingredient)", ingredient=ingredient)
 
             check_recipe_id = db.execute("SELECT recipeId FROM recipe_name WHERE recipeName = :n and (userId = :id OR userId IS NULL)", n=name, id=session["user_id"])
             recipe_id = check_recipe_id[0]["recipeId"]
@@ -345,20 +346,21 @@ def ingredients():
 
         if not request.form.get("listSubmitIngredient") or not \
                request.form.get("listSubmitMeasure") or \
-               int(request.form.get("listSubmitMeasure")) <= 0 or \
+               float(request.form.get("listSubmitMeasure")) <= 0 or \
                request.form.get("listSubmitUnit") == 'Choose unit' or \
                request.form.get("listSubmitListname") == 'Choose one of the lists':
             return render_template("ingredients.html", names=names)
 
         else:
             ingredient = request.form.get("listSubmitIngredient")
-            measure = int(request.form.get("listSubmitMeasure"))
+            measure = float(request.form.get("listSubmitMeasure"))
             unit = request.form.get("listSubmitUnit")
             list_name = request.form.get("listSubmitListname")
 
             # add ingredient to list if it's not 
-            db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
-            db.execute("INSERT INTO ingredients_search (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+            add = db.execute("INSERT INTO ingredients (ingredient) VALUES(:ingredient)", ingredient=ingredient)
+            if add:
+                db.execute("INSERT INTO ingredients_search (ingredient) VALUES(:ingredient)", ingredient=ingredient)
             
             # read ingredient and list id's from databases
             check_id = db.execute("SELECT ingredientId FROM ingredients WHERE ingredient = :i", i=ingredient)

@@ -16,8 +16,9 @@
     <script type=text/javascript>$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};</script>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,300,700' rel='stylesheet' type='text/css'>
 </head>
-<body>
-    {% if session.user_id %}
+
+{% if session.user_id %}
+    <body class="body"> 
         <nav class="navbar navbar-user bg-user navbar-dark navbar-expand-lg">
             <span class="navbar-brand">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +47,8 @@
                 </ul>
             </div>
         </nav>
-    {% else %}
+{% else %}
+    <body>
         <nav class="navbar bg-nouser navbar-dark navbar-expand-lg">
             <span class="navbar-brand">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +65,7 @@
                 </ul>
             </div>
         </nav>
-    {% endif %}
+{% endif %}
 
     <!-- Images from pixabay.com -->
     {% if not session.user_id %}
