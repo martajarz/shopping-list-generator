@@ -135,7 +135,7 @@ def get_list():
     """Get list from db."""
     listname = request.args.get("q")
     check_list_id = db.execute("SELECT listId FROM list_name WHERE listName = :l AND userId = :id", l=listname, id=session["user_id"])
-    rows = db.execute("SELECT lists.measure, lists.unit, ingredients.ingredient FROM lists INNER JOIN ingredients ON lists.ingredientId=ingredients.ingredientId WHERE lists.listID = :l AND lists.userId = :id", l=check_list_id[0]["listId"], id=session["user_id"])
+    rows = db.execute("SELECT lists.measure, lists.unit, ingredients.ingredient FROM lists INNER JOIN ingredients ON lists.ingredientId=ingredients.ingredientId WHERE lists.listId = :l AND lists.userId = :id", l=check_list_id[0]["listId"], id=session["user_id"])
     return jsonify(rows)
 
 @app.route("/delete_list", methods=["POST"])

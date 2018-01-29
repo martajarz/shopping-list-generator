@@ -12,3 +12,5 @@ static/files temp/
 ShoppingList.db
 
 flask/
+
+\.DS_Store
