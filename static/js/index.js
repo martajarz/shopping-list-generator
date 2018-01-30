@@ -69,8 +69,10 @@ const formValidation = (function() {
         const inputPassword = options.form.querySelector('#registerInputPassword');
         const confirmPassword = options.form.querySelector('#registerConfirmPassword');
 
+        const msgInvalidPassoword = 'Please enter the correct password';
+
         if (inputPassword.value.length < 8 || confirmPassword.value == '' || inputPassword.value !== confirmPassword.value) {
-            showFieldValidation(input, false, 'msgConfirm', '');
+            showFieldValidation(input, false, 'msgConfirm', msgInvalidPassoword);
             return false;
         } else {
             showFieldValidation(input, true, 'msgConfirm', '');

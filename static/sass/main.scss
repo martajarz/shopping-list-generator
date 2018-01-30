@@ -70,7 +70,7 @@ body {
 }
 .carousel {
     margin-bottom: 4rem;
-    position: absolute;
+    position: fixed;
     top: 0;
   }
 
@@ -320,4 +320,43 @@ span.twitter-typeahead {
 
 .recipe-link:hover {
     color: $sienna-color;
+}
+
+@media only screen and (max-width: 800px) {
+    .body {
+        overflow: auto;
+    }
+
+    .login-window {
+        top: 70px;
+        right: 0;
+        left: 0;
+        margin-bottom: 20px;
+        h4 {
+            text-align: center;
+            color: $light-steel-color;
+            padding-bottom: 10px;
+        }
+    }
+
+    .navbar-brand {
+        font-size: 1em;
+    }
+
+    .user-icon {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 10px;
+        width: 120px;
+    }
+
+    .form-group-row:nth-child(-n+2) {
+        height: 95px;
+    }
+    
+    .form-group-row2 {
+        height: 85px;
+    }
+
 }
