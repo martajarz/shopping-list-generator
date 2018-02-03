@@ -52,7 +52,7 @@ def login():
 
         # ensure username exists and password is correct
         if len(rows) != 1 or not pwd_context.verify(request.form.get("password"), rows[0]["hash"]):
-            return apology("invalid username and/or password")
+            return render_template("login.html")
 
         # remember which user has logged in
         session["user_id"] = rows[0]["ID"]
@@ -81,7 +81,7 @@ def register():
 
         # ensure username do not exist already
         if not result:
-            return apology("User exist, please choose another username.")
+            return render_template("register.html")
         
         # log in registered user
         rows = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username"))
