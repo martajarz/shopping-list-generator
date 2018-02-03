@@ -322,6 +322,12 @@ span.twitter-typeahead {
     color: $sienna-color;
 }
 
+.test {
+    color: $light-steel-color;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
 @media only screen and (max-width: 800px) {
     .body {
         overflow: auto;
