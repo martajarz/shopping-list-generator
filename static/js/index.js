@@ -80,6 +80,33 @@ const formValidation = (function() {
         }
     }
 
+    const testLoginEmail = function(input) {
+        const msgInvalidAddress = 'Please enter the correct address';
+        const msgCorrect = ' ';
+
+        function getData() {
+            return $.ajax({
+                url : $SCRIPT_ROOT + '/check_username',
+                data: {
+                    q: input.value
+                },
+                type: 'GET'
+            });
+        }
+
+        function handleData(data) {
+            if (JSON.stringify(data) == '[]') {
+                showFieldValidation(input, false, 'msgEmail', msgInvalidAddress);
+                return false;
+            } else {
+                showFieldValidation(input, true, 'msgEmail', msgCorrect);
+                return true;
+            }
+        }       
+        
+        getData().done(handleData);       
+    };
+
     const testNewList = function(input) {
         const msgUsedName = 'List with that name already exist';
         const msgInvalidName = 'Please input name';
@@ -167,6 +194,10 @@ const formValidation = (function() {
                     element.addEventListener('keyup', function() {testConfirmPassword(element)});
                     element.addEventListener('blur', function() {testConfirmPassword(element)});
                 }
+                if (type == 'EMAIL' && elementId == 'loginEmail') {
+                    element.addEventListener('keyup', function() {testLoginEmail(element)});
+                    element.addEventListener('blur', function() {testLoginEmail(element)});
+                }
                 if (type == 'TEXT' && elementId == 'addNewList') {
                     element.addEventListener('keyup', function() {testNewList(element)});
                     element.addEventListener('blur', function() {testNewList(element)});
@@ -186,6 +217,7 @@ const formValidation = (function() {
             let readyToSubmit = true;
             let checkSubmitEmail = true;
             let checkSubmitPassword = true;
+            let checkLoginEmail = true;
             let checkSubmitConfirm = true;
             let checkSubmitText = true;
     
@@ -212,6 +244,9 @@ const formValidation = (function() {
                     }
                     if (type == 'PASSWORD') {
                         checkSubmitConfirm = checkError(element);                            
+                    }
+                    if (type == 'EMAIL') {
+                        checkLoginEmail = checkError(element);                            
                     }
                     if (type == 'TEXT') {
                         checkSubmitText = checkError(element);                            
@@ -394,10 +429,5 @@ function getRecipe() {
 
     getData(this.value).done(handleData);
 }
-
-
-
-
-
 
 
