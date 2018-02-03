@@ -182,7 +182,7 @@ const formValidation = (function() {
                 const type = element.type.toUpperCase();
                 const elementId = element.id;
 
-                if (type == 'EMAIL') {
+                if (type == 'EMAIL' && elementId == 'registerInputEmail') {
                     element.addEventListener('keyup', function() {testInputEmail(element)});
                     element.addEventListener('blur', function() {testInputEmail(element)});
                 }
