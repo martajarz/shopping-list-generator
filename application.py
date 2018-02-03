@@ -31,7 +31,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 
-db = SQL("sqlite:////home/martajarz/mysite/ShoppingList.db")
+db = SQL("sqlite:///ShoppingList.db")
 
 @app.route("/")
 def index():
