@@ -1,0 +1,7 @@
+{
+   "baseUrl": "http://martajarz.pythonanywhere.com/",
+   
+   "env": {
+      "registerButton" : "[data-cy=register]"
+   }
+}
