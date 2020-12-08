@@ -13,7 +13,7 @@ describe("check register page", () => {
     })
 
     it("check input fields validation for incorrect values", () => {
-        cy.get('#registerInputEmail').type("test.mail@a.a");
+        cy.get('#registerInputEmail').type("invalid.mail@a.a");
         cy.get('#msgEmail').contains("Please enter the correct address");
 
         cy.get('#registerInputPassword').type("Pass567");
@@ -28,8 +28,8 @@ describe("check register page", () => {
     })
 
     it("check input fields validation for correct values", () => {
-        cy.getRandomCredentials().then(value => {
 
+        cy.getRandomCredentials().then(value => {
             cy.get('#registerInputEmail').clear().type(value.randomEmailAddress);
             cy.get('#msgEmail').invoke("val").should("be.empty");
 
