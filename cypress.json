@@ -1,7 +1,9 @@
 {
-   "baseUrl": "http://martajarz.pythonanywhere.com/",
+   "baseUrl" : "http://martajarz.pythonanywhere.com/",
    
    "env": {
-      "registerButton" : "[data-cy=register]"
+      "registerButton" : "[data-cy=register]",
+      "loginButton" : "[data=cy=login]",
+      "homepageName" : "[data-cy=homepageName]"
    }
 }
