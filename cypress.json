@@ -3,7 +3,7 @@
    
    "env": {
       "registerButton" : "[data-cy=register]",
-      "loginButton" : "[data=cy=login]",
+      "loginButton" : "[data-cy=login]",
       "homepageName" : "[data-cy=homepageName]"
    }
 }
