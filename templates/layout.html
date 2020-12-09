@@ -20,29 +20,29 @@
 {% if session.user_id %}
     <body> 
         <nav class="navbar navbar-user bg-user navbar-dark navbar-expand-lg">
-            <span class="navbar-brand" data-cy="homepageName">Shopping list generator</span>
+            <span class="navbar-brand" data-cy="webAppName">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('lists') }}">Lists<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ url_for('lists') }}" data-cy="listTab">Lists<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('recipes') }}">Recipes</a>
+                        <a class="nav-link" href="{{ url_for('recipes') }}" data-cy="recipesTab">Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('ingredients') }}">Ingredients</a>
+                        <a class="nav-link" href="{{ url_for('ingredients') }}" data-cy="ingredientsTab">Ingredients</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('new_recipe') }}">New recipe</a>
+                        <a class="nav-link" href="{{ url_for('new_recipe') }}" data-cy="newRecipeTab">New recipe</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('add_to_recipe') }}">Add ingredients to recipe</a>
+                        <a class="nav-link" href="{{ url_for('add_to_recipe') }}" data-cy="addIngredientsToRecipeTab">Add ingredients to recipe</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
+                        <a class="nav-link" href="{{ url_for('logout') }}" data-cy="logOutTab">Log out</a>
                     </li>
                 </ul>
             </div>
@@ -50,7 +50,7 @@
 {% else %}
     <body class="body">
         <nav class="navbar bg-nouser navbar-dark navbar-expand-lg">
-            <span class="navbar-brand">Shopping list generator</span>
+            <span class="navbar-brand" data-cy="webAppName">Shopping list generator</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

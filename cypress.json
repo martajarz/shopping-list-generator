@@ -4,9 +4,19 @@
    "env": {
       "registerButton" : "[data-cy=register]",
       "loginButton" : "[data-cy=login]",
-      "homepageName" : "[data-cy=homepageName]",
-      "enterEmailHeading" : "[data-cy=enterEmailHeading]",
-      "enterEmailInput" : "[data-cy=enterEmailInput"
-
+      "webAppName" : "[data-cy=webAppName]",
+      "registerEmailInput" : "[data-cy=registerEmailInput]",
+      "registerEmailMsg" : "[data-cy=registerEmailMsg]",
+      "registerPasswordInput" : "[data-cy=registerPasswordInput]",
+      "registerPasswordMsg" : "[data-cy=registerPasswordMsg]",
+      "registerConfirmPasswordInput" : "[data-cy=registerConfirmPasswordInput]",
+      "registerConfirmPasswordMsg" : "[data-cy=registerConfirmPasswordMsg]",
+      "registerSubmitButton" : "[data-cy=registerSubmitButton]",
+      "listTab" : "[data-cy=listTab]",
+      "recipesTab" : "[data-cy=recipesTab]",
+      "ingredientsTab" : "[data-cy=ingredientsTab]",
+      "newRecipeTab" : "[data-cy=newRecipeTab]",
+      "addIngredientsToRecipeTab" : "[data-cy=addIngredientsToRecipeTab]",
+      "logOutTab" : "[data-cy=logOutTab]"
    }
 }

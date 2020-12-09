@@ -14,7 +14,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h4>Register</h4>
+                    <h4 data-cy="registerWindowHeading">Register</h4>
                 </div>
             </div>
             <div class="row">
@@ -22,21 +22,21 @@
                 <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
                     <form class="form" action="{{ url_for('register') }}" method="post">
                         <div class="form-group-row">
-                            <small data-cy="enterEmailHeading">Enter your email address:</small>
-                            <input type="email" class="form-control" id="registerInputEmail" name="username" placeholder="Enter email" required>
-                            <small id="msgEmail"></small>
+                            <small data-cy="registerEmailInputHeading">Enter your email address:</small>
+                            <input type="email" class="form-control" id="registerInputEmail" name="username" placeholder="Enter email" required data-cy="registerEmailInput">
+                            <small id="msgEmail" data-cy="registerEmailMsg"></small>
                         </div>
                         <div class="form-group-row">
                             <small>Create a password (At least 8 characters long).</small>
-                            <input type="password" class="form-control" id="registerInputPassword" name="password" placeholder="Enetr password" required>
-                            <small id="msgPassword"></small>
+                            <input type="password" class="form-control" id="registerInputPassword" name="password" placeholder="Enter password" required data-cy="registerPasswordInput">
+                            <small id="msgPassword" data-cy="registerPasswordMsg"></small>
                         </div>
                         <div class="form-group-row">
                             <small>Confirm your password.</small>
-                            <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter password (again)" required>
-                            <small id="msgConfirm"></small>
+                            <input type="password" class="form-control" id="registerConfirmPassword" placeholder="Enter password (again)" required data-cy="registerConfirmPasswordInput">
+                            <small id="msgConfirm" data-cy="registerConfirmPasswordMsg"></small>
                         </div>
-                        <button type="submit" class="btn btn-color">Submit</button>
+                        <button type="submit" class="btn btn-color" data-cy="registerSubmitButton">Submit</button>
                     </form>
                 </div>
                 <div class="col-md"></div>
