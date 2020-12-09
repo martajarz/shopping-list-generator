@@ -22,7 +22,7 @@
                 <div class="col-12 col-sm-12 col-md-8 col-lg-6 col-xl-6">
                     <form class="form" action="{{ url_for('register') }}" method="post">
                         <div class="form-group-row">
-                            <small>Enter your email address:</small>
+                            <small data-cy="enterEmailHeading">Enter your email address:</small>
                             <input type="email" class="form-control" id="registerInputEmail" name="username" placeholder="Enter email" required>
                             <small id="msgEmail"></small>
                         </div>

@@ -8,8 +8,8 @@ describe("check register page", () => {
 
     it("check if all fields are named correctly", () => {
         cy.get('h4').contains("Register");
-        cy.get('.form > :nth-child(1) > :nth-child(1)').contains("Enter your email address:");
-        cy.get('#registerInputEmail').should('have.attr', 'placeholder', 'Enter email');
+        cy.get(Cypress.env("enterEmailHeading")).contains("Enter your email address:");
+        cy.get(Cypress.env("enterEmailInput")).should('have.attr', 'placeholder', 'Enter email');
     })
 
     it("check input fields validation for incorrect values", () => {
@@ -28,8 +28,8 @@ describe("check register page", () => {
     })
 
     it("check input fields validation for correct values", () => {
-
         cy.getRandomCredentials().then(value => {
+            
             cy.get('#registerInputEmail').clear().type(value.randomEmailAddress);
             cy.get('#msgEmail').invoke("val").should("be.empty");
 

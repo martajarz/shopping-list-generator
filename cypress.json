@@ -4,6 +4,9 @@
    "env": {
       "registerButton" : "[data-cy=register]",
       "loginButton" : "[data-cy=login]",
-      "homepageName" : "[data-cy=homepageName]"
+      "homepageName" : "[data-cy=homepageName]",
+      "enterEmailHeading" : "[data-cy=enterEmailHeading]",
+      "enterEmailInput" : "[data-cy=enterEmailInput"
+
    }
 }
