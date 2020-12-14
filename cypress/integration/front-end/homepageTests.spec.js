@@ -1,11 +1,8 @@
 describe("check if homepage is displayed properly", () => {
 
-    it("baseUrl successfully loads", () => {
+    it("baseUrl successfully loads --> check name of the homepage", () => {
         cy.visit("/");
-        cy.url().should("equal", "http://martajarz.pythonanywhere.com/");
-    })
-
-    it("check name of the homepage", () => {
+        cy.url().should("equal", Cypress.config().baseUrl + "/");
         cy.get(Cypress.env("webAppName")).contains("Shopping list generator");
     })
 
