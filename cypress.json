@@ -16,7 +16,7 @@
       "loginEmailMsg" : "[data-cy=loginEmailMsg]",
       "loginPasswordInput" : "[data-cy=loginPasswordInput",
       "loginSubmitButton" : "[data-cy=loginSubmitButton",
-      "listTab" : "[data-cy=listTab]",
+      "listsTab" : "[data-cy=listsTab]",
       "recipesTab" : "[data-cy=recipesTab]",
       "ingredientsTab" : "[data-cy=ingredientsTab]",
       "newRecipeTab" : "[data-cy=newRecipeTab]",
