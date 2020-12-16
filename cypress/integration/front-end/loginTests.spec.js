@@ -21,7 +21,7 @@ describe("check happy and unhappy path of login", () => {
             .then(value => {
                 cy.postRegister(value.randomEmailAddress, value.randomPassword)
 
-                cy.visit(Cypress.config().baseUrl)
+                cy.visit("/");
                 cy.get(Cypress.env("logOutTab")).click();
 
                 cy.get(Cypress.env("loginEmailInput")).type(value.randomEmailAddress);
@@ -39,7 +39,7 @@ describe("check happy and unhappy path of login", () => {
     })
 
     it("check if all tabs are available for user right after login", () => {
-        cy.get(Cypress.env("listTab")).contains("Lists");
+        cy.get(Cypress.env("listsTab")).contains("Lists");
         cy.get(Cypress.env("recipesTab")).contains("Recipes");
         cy.get(Cypress.env("ingredientsTab")).contains("Ingredients");
         cy.get(Cypress.env("newRecipeTab")).contains("New recipe");

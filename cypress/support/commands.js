@@ -24,6 +24,16 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
+function generateRandomString() {
+    let randomString = "";
+
+    for (let i = 0; i < 3; i++) {
+        randomString += Math.random().toString(36).substr(2, 5);
+    }
+    return randomString;
+}
+Cypress.Commands.add("generateRandomString", generateRandomString);
+
 function generateRandomEmailAddress() {
     const randomNumber = Math.floor(Math.random() * 1000000);
     const randomString = Math.random().toString(36).substr(2, 5);
@@ -47,7 +57,7 @@ function getRandomCredentials() {
         randomEmailAddress: generateRandomEmailAddress(),
         randomPassword: generateRandomPassword()
     };
-    return cy.wrap(randomCredentials);
+    return randomCredentials;
 }
 Cypress.Commands.add("getRandomCredentials", getRandomCredentials);
 

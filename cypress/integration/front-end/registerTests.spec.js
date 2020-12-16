@@ -56,7 +56,7 @@ describe("check happy and unhappy path of registration", () => {
     })
 
     it("check if all tabs are available for user right after registration", () => {
-        cy.get(Cypress.env("listTab")).contains("Lists");
+        cy.get(Cypress.env("listsTab")).contains("Lists");
         cy.get(Cypress.env("recipesTab")).contains("Recipes");
         cy.get(Cypress.env("ingredientsTab")).contains("Ingredients");
         cy.get(Cypress.env("newRecipeTab")).contains("New recipe");

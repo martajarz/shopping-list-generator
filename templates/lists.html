@@ -9,10 +9,10 @@
                     <form class="form" action="{{ url_for('lists') }}" method="post">
                         <div class="form-group-row2">
                             <small>Input name of the list:</small>
-                            <input type="text" class="form-control" id="addNewList" name="listName" placeholder="Enter list name" required>
+                            <input type="text" class="form-control" id="addNewList" name="listName" placeholder="Enter list name" required data-cy="addNewListInput">
                             <small id="msgListName"></small>
                         </div>
-                        <button type="submit" class="btn btn-color">Add</button>
+                        <button type="submit" class="btn btn-color" data-cy="addNewListButton">Add</button>
                     </form>
                 </div>
                 <div class="col-md"></div>
@@ -24,7 +24,7 @@
                     <h6>Choose list:</h6>
                     <form class="form" action="/delete_list" method="post">
                         <div class="input-group">
-                            <select class="custom-select" id="viewList" name="selectedList">
+                            <select class="custom-select" id="viewList" name="selectedList" data-cy="listSelect">
                                 <option selected>Choose one of the lists</option>
                                 {% for name in names %}
                                 <option value={{name}}>{{name}}</option>
