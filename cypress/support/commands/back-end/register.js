@@ -1,4 +1,4 @@
-Cypress.Commands.add("registerUser", function(email, password) {
+Cypress.Commands.add("registerRequest", function(email, password) {
   cy.request({
     method: "POST",
     url: "/register",
