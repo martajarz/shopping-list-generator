@@ -8,5 +8,5 @@ Cypress.Commands.add("addNewList", function (name) {
 
 Cypress.Commands.add("deleteList", function (name) {
     LTE.listSelect().select(name);
-    cy.get('.input-group-append > .btn').click();
+    LTE.deleteListButton().click();
 })

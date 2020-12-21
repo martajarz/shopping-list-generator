@@ -29,7 +29,7 @@ describe("check functionality of Lists tab", () => {
         for (let i = 0; i < 10; i++) {
             cy.deleteList(listsArray[i]);
 
-            cy.get("#viewList > option").each(($option) => {
+            cy.get("[data-cy=listSelect] > option").each(($option) => {
                 expect($option).to.not.have.value(listsArray[i]);
             })
         }
