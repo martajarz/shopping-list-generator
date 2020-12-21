@@ -11,10 +11,10 @@ describe("check functionality of Lists tab", () => {
         MME.listsTab().click();
     })
 
-    const listsArray = [];
+    let listsArray = [];
 
     it("add 10 lists", () => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 10; i++) {
             const name = RD.generateRandomString();
             listsArray[i] = name;
 
@@ -27,16 +27,17 @@ describe("check functionality of Lists tab", () => {
     })
 
     it("delete 10 lists", () => {
-        for (let i = 0; i < 3; i++) {
-        console.log(cy.get("#viewList"))
+        for (let i = 0; i < 10; i++) {
+            cy.deleteList(listsArray[i]);
 
-            //cy.deleteList(listsArray[i]);
-
-
-
-
-
+            cy.get("#viewList > option").each(($option) => {
+                expect($option).to.not.have.value(listsArray[i]);
+            })
         }
     })
 })
+
+
+
+
 
