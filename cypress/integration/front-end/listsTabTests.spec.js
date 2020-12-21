@@ -23,7 +23,6 @@ describe("check functionality of Lists tab", () => {
                 .select(name)
                 .should("have.value", name);
         }
-        console.log(listsArray);
     })
 
     it("delete 10 lists", () => {
