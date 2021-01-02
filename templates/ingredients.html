@@ -9,14 +9,14 @@
                         <h5>Add ingredient to list:</h5>
                         <h6>Enter the name of the ingredient:</h6>
                         <label class="sr-only">Name, category</label>
-                        <input class="form-control typeahead" placeholder="Name, category" type="text" name="listSubmitIngredient" autocomplete="off" required>
+                        <input class="form-control typeahead" placeholder="Name, category" type="text" name="listSubmitIngredient" autocomplete="off" required data-cy="ingredientNameCategoryInput">
                         <h6>Add parameters:</h6>
                         <div class="form-row">
                             <div class="col-5">
-                                <input type="number" class="form-control" placeholder="Measure" name="listSubmitMeasure" step=0.1 min=0 required>
+                                <input type="number" class="form-control" placeholder="Measure" name="listSubmitMeasure" step=0.1 min=0 required data-cy="ingredientMeasureInput">
                             </div>
                             <div class="col-7">
-                                <select class="form-control" name="listSubmitUnit">
+                                <select class="form-control" name="listSubmitUnit" data-cy="ingredientSelectUnit">
                                     <option selected>Choose unit</option>
                                     <option>teaspoon</option>
                                     <option>tablespoon</option>
@@ -34,7 +34,7 @@
                                 </select>
                             </div>
                         </div>
-                        <select class="form-control" name="listSubmitListname">
+                        <select class="form-control" name="listSubmitListname" data-cy="ingredientsSelectList">
                             <option selected>Choose one of the lists</option>
                             {% for name in names %}
                             <option value={{name}}>{{name}}</td>
