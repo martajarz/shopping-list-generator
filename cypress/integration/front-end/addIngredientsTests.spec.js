@@ -22,7 +22,7 @@ describe("check functionality of adding ingredients", () => {
         cy.get("[data-cy=ingredientSubmitButton]").click();
     }
 
-    before("register user", () => {
+    before("register user and go to ingredients tab", () => {
         cy.registerRequest(credentials.email, credentials.password);
         cy.addListRequest(listName);
         cy.visit("/");
@@ -35,18 +35,8 @@ describe("check functionality of adding ingredients", () => {
             ingredients[i] = ingredientName;
             measures[i] = i + 1;
 
-            if (i < 3) {
-                fillNameAndMeasureField(ingredientName, measures[i]);
-                selectUnitAndListThenClickSubmit(units[i], listName);
-            }
-            else if (i >= 3 && i < 10) {
-                fillNameAndMeasureField(ingredientName, measures[i]);
-                selectUnitAndListThenClickSubmit(units[i], listName);
-            }
-            else {
-                fillNameAndMeasureField(ingredientName, measures[i]);
-                selectUnitAndListThenClickSubmit(units[i], listName);
-            }
+            fillNameAndMeasureField(ingredientName, measures[i]);
+            selectUnitAndListThenClickSubmit(units[i], listName);
         }
     })
 
