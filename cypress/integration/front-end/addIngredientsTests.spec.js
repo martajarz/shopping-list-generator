@@ -1,16 +1,15 @@
-import { internet } from "faker";
 import * as RD from "../../support/generators/randomData";
 import * as MME from "../../webElements/mainMenuElements";
 import * as ITE from "../../webElements/ingredientsTabElements";
 import * as LTE from "../../webElements/listsTabElements";
 
-describe("check functionality of Ingredients tab", () => {
+describe("check functionality of adding ingredients", () => {
 
     const credentials = RD.getRandomCredentials();
     const listName = RD.generateRandomString();
     const units = ["teaspoon", "tablespoon", "item", "package", "cup", "ml", "dl", "l", "pound", "ounce", "mg", "g", "kg"];
-    let ingredients = [];
-    let measures = [];
+    const ingredients = [];
+    const measures = [];
 
     const fillNameAndMeasureField = function (ingredientName, measure) {
         ITE.nameCategoryInputField().type(ingredientName);
@@ -20,7 +19,7 @@ describe("check functionality of Ingredients tab", () => {
     const selectUnitAndListThenClickSubmit = function (unit, listName) {
         ITE.unitSelectLocator().select(unit);
         ITE.listSelectLocator().select(listName);
-        cy.get('.btn').click();
+        cy.get("[data-cy=ingredientSubmitButton]").click();
     }
 
     before("register user", () => {
@@ -31,31 +30,21 @@ describe("check functionality of Ingredients tab", () => {
     })
 
     it("add 13 ingredients to list", () => {
-        for (let i = 0; i < 5; i++) {
-            const ingredientName = RD.generateRandomString().slice(0, 5) + ", " + RD.generateRandomString().slice(0, 5);
+        for (let i = 0; i < 13; i++) {
+            const ingredientName = RD.generateRandomString().slice(0, 6) + ", " + RD.generateRandomString().slice(0, 6);
             ingredients[i] = ingredientName;
+            measures[i] = i + 1;
 
             if (i < 3) {
-                measures[i] = i + 1;
                 fillNameAndMeasureField(ingredientName, measures[i]);
                 selectUnitAndListThenClickSubmit(units[i], listName);
             }
-
-            if (i > 3 && i < 8) {
+            else if (i >= 3 && i < 10) {
                 fillNameAndMeasureField(ingredientName, measures[i]);
-
-                for (let j = i; j > 0; i--) {
-                    ITE.measureInputField().type("{uparrow}");
-                }
                 selectUnitAndListThenClickSubmit(units[i], listName);
             }
-
             else {
                 fillNameAndMeasureField(ingredientName, measures[i]);
-
-                for (let j = i; j > 0; i--) {
-                    ITE.measureInputField().type("{downarrow}");
-                }
                 selectUnitAndListThenClickSubmit(units[i], listName);
             }
         }
@@ -66,10 +55,17 @@ describe("check functionality of Ingredients tab", () => {
         cy.visit("/lists");
         LTE.listSelect().select(listName);
 
-        for (let i = 0; i < 5; i++) {
-            cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(2)").contains(ingredients[i]);
-            cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(3)").contains(measures[i]);
-            cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(4)").contains(units[i]);
+        for (let i = 0; i < 13; i++) {
+            if (i <= 3) {
+                cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(2)").contains(ingredients[i]);
+                cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(3)").contains(measures[i]);
+                cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(4)").contains(units[i]);
+            }
+            else {
+                cy.get(":nth-child(" + (i + 1) + ")> :nth-child(2)").contains(ingredients[i]);
+                cy.get(":nth-child(" + (i + 1) + ")> :nth-child(3)").contains(measures[i]);
+                cy.get(":nth-child(" + (i + 1) + ")> :nth-child(4)").contains(units[i]);
+            }
         }
     })
 })
