@@ -1,6 +1,6 @@
 const ingredientNameCategoryInputLocator = "#searchIngredient > span > input.form-control.typeahead.tt-input";
 const ingredientMeasureInputLocator = "[data-cy=ingredientMeasureInput]";
-const ingredientUnitSelectLocator = "[data-cy=ingredientSelectUnit]";
+const ingredientUnitSelectLocator = "[data-cy=ingredientUnitSelect]";
 const ingredientListSelectLocator = "[data-cy=ingredientsSelectList]";
 
 export function nameCategoryInputField() {

@@ -6,37 +6,31 @@ import * as LTE from "../../webElements/listsTabElements";
 describe("check functionality of adding ingredients", () => {
 
     const credentials = RD.getRandomCredentials();
-    const listName = RD.generateRandomString();
-    const units = ["teaspoon", "tablespoon", "item", "package", "cup", "ml", "dl", "l", "pound", "ounce", "mg", "g", "kg"];
     const ingredients = [];
     const measures = [];
+    const units = ["teaspoon", "tablespoon", "item", "package", "cup", "ml", "dl", "l", "pound", "ounce", "mg", "g", "kg"];
+    const listName = RD.generateRandomString();
 
-    const fillNameAndMeasureField = function (ingredientName, measure) {
-        ITE.nameCategoryInputField().type(ingredientName);
-        ITE.measureInputField().type(measure);
-    }
+    // iterate through options. dunno how. const units = [];
 
-    const selectUnitAndListThenClickSubmit = function (unit, listName) {
-        ITE.unitSelectLocator().select(unit);
-        ITE.listSelectLocator().select(listName);
-        cy.get("[data-cy=ingredientSubmitButton]").click();
-    }
-
-    before("register user and go to ingredients tab", () => {
+    before("register user", () => {
         cy.registerRequest(credentials.email, credentials.password);
         cy.addListRequest(listName);
         cy.visit("/");
         MME.ingredientsTab().click();
     })
 
-    it("add 13 ingredients to list", () => {
-        for (let i = 0; i < 13; i++) {
+    it("add one ingredient per unit", () => {
+        for (let i = 0; i < units.length; i++) {
             const ingredientName = RD.generateRandomString().slice(0, 6) + ", " + RD.generateRandomString().slice(0, 6);
             ingredients[i] = ingredientName;
             measures[i] = i + 1;
 
-            fillNameAndMeasureField(ingredientName, measures[i]);
-            selectUnitAndListThenClickSubmit(units[i], listName);
+            ITE.nameCategoryInputField().type(ingredientName);
+            ITE.measureInputField().type(measures[i]);
+            ITE.unitSelectLocator().select(units[i]);
+            ITE.listSelectLocator().select(listName);
+            cy.get("[data-cy=ingredientSubmitButton]").click();
         }
     })
 
@@ -45,7 +39,7 @@ describe("check functionality of adding ingredients", () => {
         cy.visit("/lists");
         LTE.listSelect().select(listName);
 
-        for (let i = 0; i < 13; i++) {
+        for (let i = 0; i < units.length; i++) {
             if (i <= 3) {
                 cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(2)").contains(ingredients[i]);
                 cy.get("tbody > :nth-child(" + (i + 1) + ")> :nth-child(3)").contains(measures[i]);
