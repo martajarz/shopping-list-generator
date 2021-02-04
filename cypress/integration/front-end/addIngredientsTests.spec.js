@@ -17,15 +17,17 @@ describe("check functionality of adding ingredients", () => {
         MME.ingredientsTab().click();
     })
 
-    it("add one ingredient per unit", () => {
-        cy.loginRequest(credentials.email, credentials.password);
-        cy.visit("/ingredients");
-
+    it("add units to an array", () => {
         for (let i = 0; i < 13; i++) {
             cy.get("[data-cy=ingredientUnitSelect] > option:nth-child(" + (i + 2) + ")").invoke("text").then(text => {
                 units[i] = text;
             });
         }
+    })
+
+    it("add one ingredient per unit", () => {
+        cy.loginRequest(credentials.email, credentials.password);
+        cy.visit("/ingredients");
 
         for (let i = 0; i < units.length; i++) {
             const ingredientName = RD.generateRandomString().slice(0, 6) + ", " + RD.generateRandomString().slice(0, 6);
