@@ -4,14 +4,11 @@ import * as ITE from "../../webElements/ingredientsTabElements";
 import * as LTE from "../../webElements/listsTabElements";
 
 describe("check functionality of adding ingredients", () => {
-
     const credentials = RD.getRandomCredentials();
     const ingredients = [];
     const measures = [];
-    const units = ["teaspoon", "tablespoon", "item", "package", "cup", "ml", "dl", "l", "pound", "ounce", "mg", "g", "kg"];
+    const units = [];
     const listName = RD.generateRandomString();
-
-    // iterate through options. dunno how. const units = [];
 
     before("register user", () => {
         cy.registerRequest(credentials.email, credentials.password);
@@ -21,6 +18,15 @@ describe("check functionality of adding ingredients", () => {
     })
 
     it("add one ingredient per unit", () => {
+        cy.loginRequest(credentials.email, credentials.password);
+        cy.visit("/ingredients");
+
+        for (let i = 0; i < 13; i++) {
+            cy.get("[data-cy=ingredientUnitSelect] > option:nth-child(" + (i + 2) + ")").invoke("text").then(text => {
+                units[i] = text;
+            });
+        }
+
         for (let i = 0; i < units.length; i++) {
             const ingredientName = RD.generateRandomString().slice(0, 6) + ", " + RD.generateRandomString().slice(0, 6);
             ingredients[i] = ingredientName;
@@ -34,7 +40,7 @@ describe("check functionality of adding ingredients", () => {
         }
     })
 
-    it("check if ingredients are in list with proper amount and unit", () => {
+    it("check if ingredients are in the list with proper amount and unit", () => {
         cy.loginRequest(credentials.email, credentials.password);
         cy.visit("/lists");
         LTE.listSelect().select(listName);
