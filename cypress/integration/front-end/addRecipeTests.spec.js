@@ -51,7 +51,6 @@ describe("check functionality of adding recipes", () => {
     })
 
     it("add 5 recipes not visible to all users", () => {
-
         for (let i = 0; i < recipesAmount; i++) {
             recipes[i] = createRecipe(false);
             cy.addRecipe(recipes[i]);
@@ -74,7 +73,6 @@ describe("check functionality of adding recipes", () => {
             findRecipeShouldNotExist(i)
         }
         */
-
         MME.logOutTab().click();
     })
 
