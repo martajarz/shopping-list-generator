@@ -18,6 +18,7 @@ import "./commands/to-be-reorganised.js";
 import "./commands/back-end/register.js";
 import "./commands/back-end/login.js";
 import "./commands/front-end/listsPage.js";
+import "./commands/back-end/addList.js";
 
 
 
