@@ -9,17 +9,17 @@
                     <form class="form" action="{{ url_for('new_recipe') }}" method="post" id="addRecipe">
                         <div class="form-group-row2">
                             <small>Name of the recipe:</small>
-                            <input type="text" class="form-control" id="addNewRecipe" name="recipeName" placeholder="Enter recipe name" autocomplete="off" required>
+                            <input type="text" class="form-control" id="addNewRecipe" name="recipeName" placeholder="Enter recipe name" autocomplete="off" required data-cy="recipeNameInput">
                             <small id="msgRecipeName"></small>
                         </div>
-                        <input class="form-control" placeholder="Category" type="text" name="recipeCategory" autocomplete="off" required>
-                        <input class="form-control" placeholder="Link to recipe" type="text" name="recipeUrl" autocomplete="off" required>
-                        <input class="form-control" placeholder="Url to picture" type="text" name="recipeImg" autocomplete="off" required>
+                        <input class="form-control" placeholder="Category" type="text" name="recipeCategory" autocomplete="off" required data-cy="recipeCategoryInput">
+                        <input class="form-control" placeholder="Link to recipe" type="text" name="recipeUrl" autocomplete="off" required data-cy="recipeLinkInput">
+                        <input class="form-control" placeholder="Url to picture" type="text" name="recipeImg" autocomplete="off" required data-cy="recipePictureUrlInput">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" id="recipeRadio" name="recipeRadio" value="checked">
+                            <input class="form-check-input" type="radio" id="recipeRadio" name="recipeRadio" value="checked" data-cy="recipeVisibleToAllRadioButton">
                             <label class="form-check-label" for="recipeRadio">Visible to all users</label>
                         </div>
-                        <input class="btn btn-color" type="submit" value="Submit">
+                        <input class="btn btn-color" type="submit" value="Submit" data-cy="recipeSubmitButton">
                     </form>
                 </div>
                 <div class="col-md"></div>

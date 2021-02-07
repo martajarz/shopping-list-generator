@@ -15,10 +15,14 @@
 
 // Import commands.js using ES2015 syntax:
 import "./commands/to-be-reorganised.js";
+//back-end
 import "./commands/back-end/register.js";
 import "./commands/back-end/login.js";
-import "./commands/front-end/listsPage.js";
 import "./commands/back-end/addList.js";
+
+//front-end
+import "./commands/front-end/listsPage.js";
+import "./commands/front-end/newRecipePage.js";
 
 
 
