@@ -1,12 +1,12 @@
-import * as LTE from "../../../webElements/listsPage";
+import * as listsPage from "../../../webElements/listsPage";
 
 Cypress.Commands.add("addNewList", function (name) {
-    LTE.addNewListInputField().type(name).then(() => {
-        LTE.addNewListButton().click();
+    listsPage.addNewListInputField().type(name).then(() => {
+        listsPage.addNewListButton().click();
     })
 })
 
 Cypress.Commands.add("deleteList", function (name) {
-    LTE.listSelect().select(name);
-    LTE.deleteListButton().click();
+    listsPage.listSelect().select(name);
+    listsPage.deleteListButton().click();
 })

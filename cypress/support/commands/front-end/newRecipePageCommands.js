@@ -1,14 +1,14 @@
-import * as NRTE from "/home/pio/projects/shopping-list-generator/cypress/webElements/newRecipePage";
+import * as newRecipePage from "/home/pio/projects/shopping-list-generator/cypress/webElements/newRecipePage";
 
 Cypress.Commands.add("addRecipe", function (recipe) {
     console.log(recipe);
-    NRTE.recipeNameInput().type(recipe.name);
-    NRTE.recipeCategoryInput().type(recipe.category);
-    NRTE.recipeLinkInput().type(recipe.link);
-    NRTE.recipePictureUrlInput().type(recipe.pictureUrl);
+    newRecipePage.recipeNameInput().type(recipe.name);
+    newRecipePage.recipeCategoryInput().type(recipe.category);
+    newRecipePage.recipeLinkInput().type(recipe.link);
+    newRecipePage.recipePictureUrlInput().type(recipe.pictureUrl);
 
     if (recipe.isVisibleToAllUsers) {
-        NRTE.recipeVisibleToAllRadioButton().click();
+        newRecipePage.recipeVisibleToAllRadioButton().click();
     }
-    NRTE.recipeSubmitButton().click();
+    newRecipePage.recipeSubmitButton().click();
 })

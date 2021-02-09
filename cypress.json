@@ -3,18 +3,5 @@
    
    "env": {
       
-   
-      
-      
-      "loginEmailInput" : "[data-cy=loginEmailInput]",
-      "loginEmailMsg" : "[data-cy=loginEmailMsg]",
-      "loginPasswordInput" : "[data-cy=loginPasswordInput",
-      "loginSubmitButton" : "[data-cy=loginSubmitButton",
-      "listsTab" : "[data-cy=listsTab]",
-      "recipesTab" : "[data-cy=recipesTab]",
-      "ingredientsTab" : "[data-cy=ingredientsTab]",
-      "newRecipeTab" : "[data-cy=newRecipeTab]",
-      "addIngredientsToRecipeTab" : "[data-cy=addIngredientsToRecipeTab]",
-      "logOutTab" : "[data-cy=logOutTab]"
    }
 }

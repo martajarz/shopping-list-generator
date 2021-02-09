@@ -1,50 +1,54 @@
+import * as homePage from "../../webElements/homePage";
+import * as loginPage from "../../webElements/loginPage";
+import * as mainMenu from "../../webElements/mainMenu";
+
 describe("check happy and unhappy path of login", () => {
 
     it("unsuccessfull login --> check fields validation", () => {
         cy.visit(Cypress.config().baseUrl);
-        cy.get(Cypress.env("loginButton")).click();
+        homePage.loginButton().click();
 
-        cy.get(Cypress.env("loginEmailInput")).type("invalid@mailAddressFormat");
-        cy.get(Cypress.env("loginEmailMsg")).contains("Please enter the correct address");
-        cy.get(Cypress.env("loginEmailInput")).clear();
+        loginPage.emailInput().type("invalid@mailAddressFormat");
+        loginPage.emailMsg().contains("Please enter the correct address");
+        loginPage.emailInput().clear();
 
-        cy.get(Cypress.env("loginEmailInput")).type("emailAddressNotInDatabase@gmail.com");
-        cy.get(Cypress.env("loginEmailMsg")).contains("Please enter the correct address");
-        cy.get(Cypress.env("loginPasswordInput")).type("testPassword1234567890");
+        loginPage.emailInput().type("emailAddressNotInDatabase@gmail.com");
+        loginPage.emailMsg().contains("Please enter the correct address");
+        loginPage.passwordInput().type("testPassword1234567890");
 
-        cy.get(Cypress.env("loginSubmitButton")).click();
+        loginPage.submitButton().click();
         cy.url().should("equal", Cypress.config().baseUrl + "/login");
     })
 
     it("successfull login", () => {
         cy.getRandomCredentials()
             .then(value => {
-                cy.postRegister(value.randomEmailAddress, value.randomPassword)
+                cy.registerRequest(value.email, value.password)
 
                 cy.visit("/");
-                cy.get(Cypress.env("logOutTab")).click();
+                mainMenu.logOutTab().click();
 
-                cy.get(Cypress.env("loginEmailInput")).type(value.randomEmailAddress);
-                cy.get(Cypress.env("loginEmailMsg")).invoke("val").should("be.empty");
+                loginPage.emailInput().type(value.email);
+                loginPage.emailMsg().invoke("val").should("be.empty");
 
-                cy.get(Cypress.env("loginPasswordInput")).type(value.randomPassword);
+                loginPage.passwordInput().type(value.password);
 
-                cy.get(Cypress.env("loginSubmitButton")).click();
+                loginPage.submitButton().click();
                 cy.url().should("equal", Cypress.config().baseUrl + "/lists");
             })
     })
 
     it("check if name of web app is presented for user right after login", () => {
-        cy.get(Cypress.env("webAppName")).contains("Shopping list generator");
+        mainMenu.webAppName().contains("Shopping list generator");
     })
 
     it("check if all tabs are available for user right after login", () => {
-        cy.get(Cypress.env("listsTab")).contains("Lists");
-        cy.get(Cypress.env("recipesTab")).contains("Recipes");
-        cy.get(Cypress.env("ingredientsTab")).contains("Ingredients");
-        cy.get(Cypress.env("newRecipeTab")).contains("New recipe");
-        cy.get(Cypress.env("addIngredientsToRecipeTab")).contains("Add ingredients to recipe");
-        cy.get(Cypress.env("logOutTab")).contains("Log out");
+        mainMenu.listsTab().contains("Lists");
+        mainMenu.recipesTab().contains("Recipes");
+        mainMenu.ingredientsTab().contains("Ingredients");
+        mainMenu.newRecipeTab().contains("New recipe");
+        mainMenu.addIngredientsToRecipeTab().contains("Add ingredients to recipe");
+        mainMenu.logOutTab().contains("Log out");
     })
 })
 
