@@ -1,3 +1,4 @@
+const webAppNameLocator = "[data-cy=webAppName]";
 const listsTabLocator = "[data-cy=listsTab]";
 const recipesTabLocator = "[data-cy=recipesTab]";
 const ingredientsTabLocator = "[data-cy=ingredientsTab]";
@@ -5,6 +6,9 @@ const newRecipeTabLocator = "[data-cy=newRecipeTab]";
 const addIngredientsToRecipeTabLocator = "[data-cy=addIngredientsToRecipeTab]";
 const logOutTabLocator = "[data-cy=logOutTab]";
 
+export function webAppName() {
+  return cy.get(webAppNameLocator);
+}
 
 export function listsTab() {
   return cy.get(listsTabLocator);

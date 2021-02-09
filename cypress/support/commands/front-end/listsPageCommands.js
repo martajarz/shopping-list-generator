@@ -1,4 +1,4 @@
-import * as LTE from "../../../webElements/listsTabElements";
+import * as LTE from "../../../webElements/listsPage";
 
 Cypress.Commands.add("addNewList", function (name) {
     LTE.addNewListInputField().type(name).then(() => {

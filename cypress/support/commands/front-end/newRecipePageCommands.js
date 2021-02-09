@@ -1,6 +1,4 @@
-import * as NRTE from "/home/pio/projects/shopping-list-generator/cypress/webElements/newRecipeTabElements";
-import * as RD from "/home/pio/projects/shopping-list-generator/cypress/support/generators/randomData";
-import { listSelectLocator } from "../../../webElements/ingredientsTabElements";
+import * as NRTE from "/home/pio/projects/shopping-list-generator/cypress/webElements/newRecipePage";
 
 Cypress.Commands.add("addRecipe", function (recipe) {
     console.log(recipe);

@@ -2,16 +2,10 @@
    "baseUrl" : "http://martajarz.pythonanywhere.com",
    
    "env": {
-      "registerButton" : "[data-cy=register]",
-      "loginButton" : "[data-cy=login]",
-      "webAppName" : "[data-cy=webAppName]",
-      "registerEmailInput" : "[data-cy=registerEmailInput]",
-      "registerEmailMsg" : "[data-cy=registerEmailMsg]",
-      "registerPasswordInput" : "[data-cy=registerPasswordInput]",
-      "registerPasswordMsg" : "[data-cy=registerPasswordMsg]",
-      "registerConfirmPasswordInput" : "[data-cy=registerConfirmPasswordInput]",
-      "registerConfirmPasswordMsg" : "[data-cy=registerConfirmPasswordMsg]",
-      "registerSubmitButton" : "[data-cy=registerSubmitButton]",
+      
+   
+      
+      
       "loginEmailInput" : "[data-cy=loginEmailInput]",
       "loginEmailMsg" : "[data-cy=loginEmailMsg]",
       "loginPasswordInput" : "[data-cy=loginPasswordInput",
