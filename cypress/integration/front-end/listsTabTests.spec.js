@@ -1,25 +1,25 @@
-import * as RD from "../../support/generators/randomData";
-import * as LTE from "../../webElements/listsTabElements";
-import * as MME from "../../webElements/mainMenuElements";
+import * as randomData from "../../support/generators/randomData";
+import * as listsPage from "../../webElements/listsPage";
+import * as mainMenu from "../../webElements/mainMenu";
 
 describe("check functionality of Lists tab", () => {
 
     before("register to shopping list generator", () => {
-        const credentials = RD.getRandomCredentials();
+        const credentials = randomData.getRandomCredentials();
         cy.registerRequest(credentials.email, credentials.password);
         cy.visit("/");
-        MME.listsTab().click();
+        mainMenu.listsTab().click();
     })
 
     let listsArray = [];
 
     it("add 10 lists", () => {
         for (let i = 0; i < 10; i++) {
-            const name = RD.generateRandomString();
+            const name = randomData.generateRandomString();
             listsArray[i] = name;
 
             cy.addNewList(name);
-            LTE.listSelect()
+            listsPage.listSelect()
                 .select(name)
                 .should("have.value", name);
         }
