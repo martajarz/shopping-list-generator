@@ -1,7 +1,7 @@
 import * as mainMenu from "../../webElements/mainMenu";
 import * as randomData from "/home/pio/projects/shopping-list-generator/cypress/support/generators/randomData";
 
-describe("check functionality of adding recipes", () => {
+describe("test the functionality of adding recipes", () => {
 
     const firstUserCredentials = randomData.getRandomCredentials();
     const secondUserCredentials = randomData.getRandomCredentials();
@@ -50,7 +50,7 @@ describe("check functionality of adding recipes", () => {
         mainMenu.newRecipeTab().click();
     })
 
-    it("add 5 recipes not visible to all users", () => {
+    it("[KNOWN BUG] add 5 recipes not visible to all users", () => {
         for (let i = 0; i < recipesAmount; i++) {
             recipes[i] = createRecipe(false);
             cy.addRecipe(recipes[i]);
@@ -68,12 +68,12 @@ describe("check functionality of adding recipes", () => {
         cy.visit("/");
         mainMenu.recipesTab().click();
 
-        /* skipped, cause it finds recipe that should not be visible to other user #bug
+        //BUG - a user who is not the creator of the recipe can find it
         for (let i = 0; i < recipesAmount; i++) {
             findRecipeShouldNotExist(i)
         }
-        */
-       mainMenu.logOutTab().click();
+
+        mainMenu.logOutTab().click();
     })
 
     it("add 5 recipes visible to all users", () => {

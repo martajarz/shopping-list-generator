@@ -3,7 +3,7 @@ import * as MME from "../../webElements/mainMenuElements";
 import * as ITE from "../../webElements/ingredientsTabElements";
 import * as LTE from "../../webElements/listsTabElements";
 
-describe("check functionality of adding ingredients", () => {
+describe("test the functionality of adding ingredients", () => {
     const credentials = RD.getRandomCredentials();
     const ingredients = [];
     const measures = [];

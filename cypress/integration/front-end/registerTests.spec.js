@@ -2,7 +2,7 @@ import * as homePage from "../../webElements/homePage";
 import * as registerPage from "../../webElements/registerPage";
 import * as mainMenu from "../../webElements/mainMenu";
 
-describe("check happy and unhappy path of registration", () => {
+describe("test happy and unhappy path of registration", () => {
 
     it("go to register page", () => {
         cy.visit("/");

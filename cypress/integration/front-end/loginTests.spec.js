@@ -2,7 +2,7 @@ import * as homePage from "../../webElements/homePage";
 import * as loginPage from "../../webElements/loginPage";
 import * as mainMenu from "../../webElements/mainMenu";
 
-describe("check happy and unhappy path of login", () => {
+describe("test happy and unhappy path of login", () => {
 
     it("unsuccessfull login --> check fields validation", () => {
         cy.visit(Cypress.config().baseUrl);

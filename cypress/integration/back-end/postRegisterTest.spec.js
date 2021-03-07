@@ -1,9 +1,9 @@
-import * as RD from "../../support/generators/randomData";
+import * as randomData from "../../support/generators/randomData";
 
-describe("post /register test", () => {
+describe("POST /register test", () => {
 
-    it("post request register user successfully", () => {
-        const credentials = RD.getRandomCredentials();
+    it("register user by request", () => {
+        const credentials = randomData.getRandomCredentials();
         cy.registerRequest(credentials.email, credentials.password)
             .then((resp) => {
                 cy.checkResponseCodeAndRedirectUrl(resp, 302, "/lists");

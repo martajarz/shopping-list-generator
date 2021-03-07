@@ -2,7 +2,7 @@ import * as randomData from "../../support/generators/randomData";
 import * as listsPage from "../../webElements/listsPage";
 import * as mainMenu from "../../webElements/mainMenu";
 
-describe("check functionality of Lists tab", () => {
+describe("test the functionality of Lists tab", () => {
 
     before("register to shopping list generator", () => {
         const credentials = randomData.getRandomCredentials();
