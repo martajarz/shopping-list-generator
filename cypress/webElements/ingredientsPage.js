@@ -2,19 +2,24 @@ const ingredientNameCategoryInputLocator = "#searchIngredient > span > input.for
 const ingredientMeasureInputLocator = "[data-cy=ingredientMeasureInput]";
 const ingredientUnitSelectLocator = "[data-cy=ingredientUnitSelect]";
 const ingredientListSelectLocator = "[data-cy=ingredientsSelectList]";
+const ingredientSubmitButtonLocator = "[data-cy=ingredientSubmitButton]";
 
-export function nameCategoryInputField() {
+export function nameCategoryInput() {
     return cy.get(ingredientNameCategoryInputLocator);
 }
 
-export function measureInputField() {
+export function measureInput() {
     return cy.get(ingredientMeasureInputLocator);
 }
 
-export function unitSelectLocator() {
+export function unitSelect() {
     return cy.get(ingredientUnitSelectLocator);
 }
 
-export function listSelectLocator() {
+export function listSelect() {
     return cy.get(ingredientListSelectLocator);
+}
+
+export function submitButton() {
+    return cy.get(ingredientSubmitButtonLocator);
 }

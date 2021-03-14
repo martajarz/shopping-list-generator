@@ -2,7 +2,7 @@ import * as homePage from "../../webElements/homePage";
 import * as registerPage from "../../webElements/registerPage";
 import * as mainMenu from "../../webElements/mainMenu";
 
-describe("test happy and unhappy path of registration", () => {
+describe("test happy and unhappy path of user registration", () => {
 
     it("go to register page", () => {
         cy.visit("/");
@@ -12,21 +12,28 @@ describe("test happy and unhappy path of registration", () => {
 
     it("check if all fields are named correctly", () => {
         registerPage.windowHeading().contains("Register");
+
         registerPage.emailInputHeading().contains("Enter your email address:");
+        registerPage.emailInput().should("have.attr", "placeholder", "Enter email");
+
+        registerPage.passwordInputHeading().contains("Create a password (At least 8 characters long).");
+        registerPage.passwordInput().should('have.attr', 'placeholder', 'Enter password');
+
+        registerPage.confirmPasswordInputHeading().contains("Confirm your password.");
+        registerPage.confirmPasswordInput().should('have.attr', 'placeholder', 'Enter password (again)');
+
+        registerPage.submitButton().contains("Submit");
     })
 
     it("check input fields validation for incorrect values", () => {
         registerPage.emailInput().type("invalid.mail@a.a");
         registerPage.emailMsg().contains("Please enter the correct address");
-        registerPage.emailInput().should('have.attr', 'placeholder', 'Enter email');
 
         registerPage.passwordInput().type("Pass567");
         registerPage.passwordMsg().contains("Please enter the correct password");
-        registerPage.passwordInput().should('have.attr', 'placeholder', 'Enter password');
 
         registerPage.confirmPasswordInput().type("Pass567");
         registerPage.confirmPasswordMsg().contains("Please enter the correct password");
-        registerPage.confirmPasswordInput().should('have.attr', 'placeholder', 'Enter password (again)');
     })
 
     it("unsuccessfully registered --> submit button should not redirect to logged user page", () => {
@@ -36,14 +43,13 @@ describe("test happy and unhappy path of registration", () => {
 
     it("check input fields validation for correct values", () => {
         cy.getRandomCredentials().then(value => {
-            
-            registerPage.emailInput().clear().type(value.randomEmailAddress);
+            registerPage.emailInput().clear().type(value.email);
             registerPage.emailMsg().invoke("val").should("be.empty");
 
-            registerPage.passwordInput().clear().type(value.randomPassword);
+            registerPage.passwordInput().clear().type(value.password);
             registerPage.passwordMsg().invoke("val").should("be.empty");
 
-            registerPage.confirmPasswordInput().clear().type(value.randomPassword);
+            registerPage.confirmPasswordInput().clear().type(value.password);
             registerPage.confirmPasswordMsg().invoke("val").should("be.empty");
         })
     })

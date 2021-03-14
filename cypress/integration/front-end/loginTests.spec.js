@@ -2,10 +2,10 @@ import * as homePage from "../../webElements/homePage";
 import * as loginPage from "../../webElements/loginPage";
 import * as mainMenu from "../../webElements/mainMenu";
 
-describe("test happy and unhappy path of login", () => {
+describe("test happy and unhappy path of user login", () => {
 
     it("unsuccessfull login --> check fields validation", () => {
-        cy.visit(Cypress.config().baseUrl);
+        cy.visit("/");
         homePage.loginButton().click();
 
         loginPage.emailInput().type("invalid@mailAddressFormat");
