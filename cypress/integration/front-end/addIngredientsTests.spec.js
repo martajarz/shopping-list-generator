@@ -1,51 +1,48 @@
-import * as RD from "../../support/generators/randomData";
-import * as MME from "../../webElements/mainMenuElements";
-import * as ITE from "../../webElements/ingredientsTabElements";
-import * as LTE from "../../webElements/listsTabElements";
+import * as randomData from "../../support/generators/randomData";
+import * as mainMenu from "../../webElements/mainMenu";
+import * as ingredientsPage from "../../webElements/ingredientsPage";
+import * as listsPage from "../../webElements/listsPage";
 
-describe("check functionality of adding ingredients", () => {
-    const credentials = RD.getRandomCredentials();
+describe("test the functionality of adding ingredients", () => {
+    const credentials = randomData.getRandomCredentials();
     const ingredients = [];
     const measures = [];
     const units = [];
-    const listName = RD.generateRandomString();
+    const listName = randomData.generateRandomString();
 
-    before("register user", () => {
+    before("register user and add list", () => {
         cy.registerRequest(credentials.email, credentials.password);
         cy.addListRequest(listName);
         cy.visit("/");
-        MME.ingredientsTab().click();
+        mainMenu.ingredientsTab().click();
     })
 
-    it("add units to an array", () => {
+    it("add units to the array, then add one ingredient per unit", () => {
         for (let i = 0; i < 13; i++) {
-            cy.get("[data-cy=ingredientUnitSelect] > option:nth-child(" + (i + 2) + ")").invoke("text").then(text => {
-                units[i] = text;
-            });
-        }
-    })
+            cy.get("[data-cy=ingredientUnitSelect] > option:nth-child(" + (i + 2) + ")").invoke("text")
+            .then(unit => {
+                units[i] = unit;
+            })
+            .then(() => {
+                for (let i = 0; i < units.length; i++) {
+                    const ingredientName = randomData.generateRandomString().slice(0, 6) + ", " + randomData.generateRandomString().slice(0, 6);
+                    ingredients[i] = ingredientName;
+                    measures[i] = i + 1;
 
-    it("add one ingredient per unit", () => {
-        cy.loginRequest(credentials.email, credentials.password);
-        cy.visit("/ingredients");
-
-        for (let i = 0; i < units.length; i++) {
-            const ingredientName = RD.generateRandomString().slice(0, 6) + ", " + RD.generateRandomString().slice(0, 6);
-            ingredients[i] = ingredientName;
-            measures[i] = i + 1;
-
-            ITE.nameCategoryInputField().type(ingredientName);
-            ITE.measureInputField().type(measures[i]);
-            ITE.unitSelectLocator().select(units[i]);
-            ITE.listSelectLocator().select(listName);
-            cy.get("[data-cy=ingredientSubmitButton]").click();
+                    ingredientsPage.nameCategoryInput().type(ingredientName);
+                    ingredientsPage.measureInput().type(measures[i]);
+                    ingredientsPage.unitSelect().select(units[i]);
+                    ingredientsPage.listSelect().select(listName);
+                    ingredientsPage.submitButton().click();
+                };
+            })
         }
     })
 
     it("check if ingredients are in the list with proper amount and unit", () => {
         cy.loginRequest(credentials.email, credentials.password);
         cy.visit("/lists");
-        LTE.listSelect().select(listName);
+        listsPage.listSelect().select(listName);
 
         for (let i = 0; i < units.length; i++) {
             if (i <= 3) {

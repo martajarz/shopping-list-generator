@@ -1,10 +1,10 @@
-import * as MME from "../../webElements/mainMenuElements";
-import * as RD from "/home/pio/projects/shopping-list-generator/cypress/support/generators/randomData";
+import * as mainMenu from "../../webElements/mainMenu";
+import * as randomData from "/home/pio/projects/shopping-list-generator/cypress/support/generators/randomData";
 
-describe("check functionality of adding recipes", () => {
+describe("test the functionality of adding recipes", () => {
 
-    const firstUserCredentials = RD.getRandomCredentials();
-    const secondUserCredentials = RD.getRandomCredentials();
+    const firstUserCredentials = randomData.getRandomCredentials();
+    const secondUserCredentials = randomData.getRandomCredentials();
     let recipes = [];
     const recipesAmount = 5;
 
@@ -17,9 +17,9 @@ describe("check functionality of adding recipes", () => {
     }
 
     const createRecipe = function (isVisibleToAllUsers) {
-        const name = RD.generateRandomString();
-        const category = RD.generateRandomString();
-        const link = "https://" + RD.generateRandomString() + ".com";
+        const name = randomData.generateRandomString();
+        const category = randomData.generateRandomString();
+        const link = "https://" + randomData.generateRandomString() + ".com";
         const pictureUrl = "https://picsum.photos/400/300";
 
         const recipe = new Recipe(name, category, link, pictureUrl, isVisibleToAllUsers);
@@ -47,55 +47,55 @@ describe("check functionality of adding recipes", () => {
     before("register first user and go to new recipe tab", () => {
         cy.registerRequest(firstUserCredentials.email, firstUserCredentials.password);
         cy.visit("/");
-        MME.newRecipeTab().click();
+        mainMenu.newRecipeTab().click();
     })
 
-    it("add 5 recipes not visible to all users", () => {
+    it("[KNOWN BUG] add 5 recipes not visible to all users", () => {
         for (let i = 0; i < recipesAmount; i++) {
             recipes[i] = createRecipe(false);
             cy.addRecipe(recipes[i]);
         }
 
         cy.visit("/");
-        MME.recipesTab().click();
+        mainMenu.recipesTab().click();
 
         for (let i = 0; i < recipesAmount; i++) {
             findRecipe(i);
         }
 
-        MME.logOutTab().click();
+        mainMenu.logOutTab().click();
         cy.registerRequest(secondUserCredentials.email, secondUserCredentials.password);
         cy.visit("/");
-        MME.recipesTab().click();
+        mainMenu.recipesTab().click();
 
-        /* skipped, cause it finds recipe that should not be visible to other user #bug
+        //BUG - a user who is not the creator of the recipe can find it
         for (let i = 0; i < recipesAmount; i++) {
             findRecipeShouldNotExist(i)
         }
-        */
-        MME.logOutTab().click();
+
+        mainMenu.logOutTab().click();
     })
 
     it("add 5 recipes visible to all users", () => {
         cy.loginRequest(firstUserCredentials.email, firstUserCredentials.password);
         cy.visit("/");
-        MME.newRecipeTab().click();
+        mainMenu.newRecipeTab().click();
 
         for (let i = 0; i < recipesAmount; i++) {
             recipes[i] = createRecipe(true);
             cy.addRecipe(recipes[i]);
         }
 
-        MME.recipesTab().click();
+        mainMenu.recipesTab().click();
 
         for (let i = 0; i < recipesAmount; i++) {
             findRecipe(i);
         }
 
-        MME.logOutTab().click();
+        mainMenu.logOutTab().click();
         cy.loginRequest(secondUserCredentials.email, secondUserCredentials.password);
         cy.visit("/");
-        MME.recipesTab().click();
+        mainMenu.recipesTab().click();
 
         for (let i = 0; i < recipesAmount; i++) {
             findRecipe(i);

@@ -54,31 +54,20 @@ Cypress.Commands.add("generateRandomPassword", generateRandomPassword);
 
 function getRandomCredentials() {
     const randomCredentials = {
-        randomEmailAddress: generateRandomEmailAddress(),
-        randomPassword: generateRandomPassword()
+        email: generateRandomEmailAddress(),
+        password: generateRandomPassword()
     };
     return randomCredentials;
 }
 Cypress.Commands.add("getRandomCredentials", getRandomCredentials);
 
-function postRegister(emailAddress, password) {
-    cy.request({
-        method: "POST",
-        url: "/register",
-        form: true,
-        followRedirect: false,
-        body: { username: emailAddress, password: password }
-    })
-}
-Cypress.Commands.add("postRegister", postRegister);
-
-function postLogin(emailAddress, password) {
+function postLogin(email, password) {
     cy.request({
         method: "POST",
         url: "/login",
         form: true,
         followRedirect: false,
-        body: { username: emailAddress, password: password }
+        body: { username: email, password: password }
     })
 }
 Cypress.Commands.add("postLogin", postLogin);

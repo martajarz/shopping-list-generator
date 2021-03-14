@@ -21,8 +21,8 @@ import "./commands/back-end/login.js";
 import "./commands/back-end/addList.js";
 
 //front-end
-import "./commands/front-end/listsPage.js";
-import "./commands/front-end/newRecipePage.js";
+import "./commands/front-end/listsPageCommands.js";
+import "./commands/front-end/newRecipePageCommands.js";
 
 
 

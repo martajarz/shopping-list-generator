@@ -1,11 +1,12 @@
 {
   "devDependencies": {
-    "cypress": "^6.1.0"
+    "cypress": "^6.6.0"
   },
   "dependencies": {
     "faker": "^5.1.0"
   },
   "scripts": {
     "e2e": "cypress open"
-  }
+  },
+  "name": "shopping-list-generator"
 }
